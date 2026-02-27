@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Spin the Fit</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Ko-fi Top Right -->
+  <div class="kofi-topright">
+    <a href="https://ko-fi.com/spinthefit" target="_blank" class="kofi-button">💖 Support Spin the Fit</a>
+  </div>
+
+  <header>
+    <h1>🎨 Spin the Fit</h1>
+    <p>Spin for colours, palettes, and textures</p>
+  </header>
+
+  <main>
+
+    <!-- Base Colour Category -->
+    <section class="category">
+      <h2>Base Colour</h2>
+      <div class="wheel-pair">
+        <div class="wheel-group">
+          <h3>Full Spectrum</h3>
+          <button onclick="spinBase()">Spin Full Spectrum</button>
+          <div id="baseResult"></div>
+        </div>
+        <div class="wheel-group">
+          <h3>Pastel</h3>
+          <button onclick="spinPastel()">Spin Pastel</button>
+          <div id="pastelResult"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Harmony Category -->
+    <section class="wheel-pair">
+      <div class="wheel-group">
+        <h2>Complementary</h2>
+        <div id="complementaryResult"></div>
+        <button onclick="spinComplementary()">Spin Complementary</button>
+      </div>
+      <div class="wheel-group">
+        <h2>Analogous</h2>
+        <div id="analogousResult"></div>
+        <button onclick="spinAnalogous()">Spin Analogous</button>
+      </div>
+    </section>
+
+    <!-- Bottom Category -->
+    <section class="wheel-pair">
+      <div class="wheel-group">
+        <h2>Monochrome</h2>
+        <div id="monoResult"></div>
+        <button onclick="spinMonochrome()">Spin Monochrome</button>
+      </div>
+      <div class="wheel-group">
+        <h2>Textures</h2>
+        <div id="textureResult"></div>
+        <button onclick="spinTexture()">Spin Texture</button>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
