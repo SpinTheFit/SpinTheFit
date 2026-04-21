@@ -2,16 +2,12 @@ let currentBase = "#ff0000";
 let spinning = false;
 let rotation = 0;
 
-const spinSound = new Audio("https://www.soundjay.com/buttons/sounds/button-16.mp3");
-
 /* =========================
-   COLOR HELPERS
+   COLOUR HELPERS
 ========================= */
 
 function randomHex() {
-  return "#" + Math.floor(Math.random() * 16777215)
-    .toString(16)
-    .padStart(6, "0");
+  return "#" + Math.floor(Math.random() * 16777215).toString(16).padStart(6, "0");
 }
 
 function pastelHex() {
@@ -39,11 +35,11 @@ function rgbToHex({ r, g, b }) {
 }
 
 /* =========================
-   RENDER SYSTEM (IMPORTANT FIX)
+   🟦 FIXED COLOUR DISPLAY
 ========================= */
 
-function renderColor(containerId, hex) {
-  const container = document.getElementById(containerId);
+function renderColor(id, hex) {
+  const container = document.getElementById(id);
   container.innerHTML = "";
 
   const item = document.createElement("div");
@@ -61,8 +57,8 @@ function renderColor(containerId, hex) {
   container.appendChild(item);
 }
 
-function renderMultiple(containerId, colors) {
-  const container = document.getElementById(containerId);
+function renderMultiple(id, colors) {
+  const container = document.getElementById(id);
   container.innerHTML = "";
 
   colors.forEach(hex => {
@@ -83,7 +79,7 @@ function renderMultiple(containerId, colors) {
 }
 
 /* =========================
-   BASE COLORS
+   BASE COLOURS
 ========================= */
 
 function spinBase() {
@@ -97,7 +93,7 @@ function spinPastel() {
 }
 
 /* =========================
-   HARMONY COLORS
+   HARMONY
 ========================= */
 
 function spinComplementary() {
@@ -112,7 +108,7 @@ function spinAnalogous() {
 }
 
 /* =========================
-   MONOCHROME (FIXED: 3 VISUAL CARDS)
+   MONOCHROME (FIXED VISUAL)
 ========================= */
 
 function spinMonochrome() {
@@ -142,21 +138,61 @@ function spinTexture() {
 }
 
 /* =========================
-   🎡 WHEEL (WORKING)
+   🎡 FULL WORKING WHEEL
 ========================= */
 
 const themes = [
   "Zombie Diner",
-  "Alien Blend In",
+  "Alien Blending In",
   "Runway Apocalypse",
   "Haunted Doll",
   "Popstar Breakdown",
   "Cyberpunk Queen",
   "Ice Empress",
   "Galaxy Girl",
-  "Barbie Glitch"
+  "Barbie Glitch",
+  "Fairy Chaos",
+  "Villain Gala",
+  "Time Traveler",
+  "Angel Fallen",
+  "Mermaid on Land"
 ];
 
+/* build visible wheel */
+function buildWheel() {
+  const wheel = document.getElementById("themeWheel");
+  const angle = 360 / themes.length;
+
+  wheel.innerHTML = "";
+
+  themes.forEach((t, i) => {
+    const seg = document.createElement("div");
+
+    seg.style.position = "absolute";
+    seg.style.width = "50%";
+    seg.style.height = "50%";
+    seg.style.top = "50%";
+    seg.style.left = "50%";
+    seg.style.transformOrigin = "0 0";
+    seg.style.transform = `rotate(${i * angle}deg) skewY(-60deg)`;
+    seg.style.background = i % 2 ? "#f8d7da" : "#dbeafe";
+
+    const text = document.createElement("span");
+    text.textContent = themes[i];
+    text.style.position = "absolute";
+    text.style.left = "10px";
+    text.style.top = "10px";
+    text.style.fontSize = "10px";
+    text.style.transform = "skewY(60deg) rotate(90deg)";
+
+    seg.appendChild(text);
+    wheel.appendChild(seg);
+  });
+}
+
+window.addEventListener("load", buildWheel);
+
+/* spin logic */
 function spinThemeWheel() {
   if (spinning) return;
   spinning = true;
@@ -170,9 +206,6 @@ function spinThemeWheel() {
   rotation += 5 * 360 + index * angle;
 
   wheel.style.transform = `rotate(${rotation}deg)`;
-
-  spinSound.currentTime = 0;
-  spinSound.play().catch(() => {});
 
   setTimeout(() => {
     result.innerHTML = `<div class="theme-card">${themes[index]}</div>`;
