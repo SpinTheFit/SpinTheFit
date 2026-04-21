@@ -2,6 +2,8 @@ let currentBase = "#ff0000";
 let spinning = false;
 let rotation = 0;
 
+const spinSound = new Audio("https://www.soundjay.com/buttons/sounds/button-16.mp3");
+
 /* COLORS */
 function randomHex() {
   return "#" + Math.floor(Math.random() * 16777215).toString(16).padStart(6,"0");
@@ -41,32 +43,29 @@ function spinPastel(){
   document.getElementById("pastelResult").innerHTML=currentBase;
 }
 
-/* HARMONY */
 function spinComplementary(){
   const c=parseInt(currentBase.slice(1),16);
-  const comp="#" + (0xffffff^c).toString(16).padStart(6,"0");
-  document.getElementById("complementaryResult").innerHTML=comp;
+  document.getElementById("complementaryResult").innerHTML =
+    "#" + (0xffffff ^ c).toString(16).padStart(6,"0");
 }
 
 function spinAnalogous(){
   document.getElementById("analogousResult").innerHTML=currentBase;
 }
 
-/* STYLE */
 function spinMonochrome(){
-  const base=randomHex();
-  document.getElementById("monoResult").innerHTML=
-    shadeColor(base,50)+" "+base+" "+shadeColor(base,-50);
+  const b=randomHex();
+  document.getElementById("monoResult").innerHTML =
+    shadeColor(b,50)+" "+b+" "+shadeColor(b,-50);
 }
 
 const textures=["denim","velvet","leather","silk","lace"];
-
 function spinTexture(){
-  document.getElementById("textureResult").innerHTML=
+  document.getElementById("textureResult").innerHTML =
     textures[Math.floor(Math.random()*textures.length)];
 }
 
-/* 🎡 REAL WHEEL */
+/* 🎡 WHEEL */
 const themes=[
   "Zombie Diner",
   "Alien Blend In",
@@ -76,32 +75,8 @@ const themes=[
   "Cyberpunk Queen",
   "Ice Empress",
   "Galaxy Girl",
-  "Barbie Glitch",
-  "Fairy Chaos",
-  "Villain Gala",
-  "Time Traveler"
+  "Barbie Glitch"
 ];
-
-function buildWheel(){
-  const wheel=document.getElementById("themeWheel");
-  const angle=360/themes.length;
-
-  wheel.innerHTML="";
-
-  themes.forEach((t,i)=>{
-    const seg=document.createElement("div");
-    seg.style.transform=`rotate(${i*angle}deg) skewY(-60deg)`;
-    seg.style.background=i%2?"#f8d7da":"#dbeafe";
-
-    const text=document.createElement("span");
-    text.innerText=t;
-
-    seg.appendChild(text);
-    wheel.appendChild(seg);
-  });
-}
-
-window.addEventListener("load",buildWheel);
 
 function spinThemeWheel(){
   if(spinning)return;
