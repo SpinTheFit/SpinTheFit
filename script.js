@@ -37,7 +37,7 @@ function rgbToHex({ r, g, b }) {
 }
 
 /* =========================
-   🎨 UNIVERSAL COLOR RENDERER
+   🎨 UNIVERSAL RENDERER
 ========================= */
 
 function renderColor(id, hex) {
@@ -95,7 +95,7 @@ function spinPastel() {
 }
 
 /* =========================
-   HARMONY
+   HARMONY FIXED
 ========================= */
 
 function spinComplementary() {
@@ -106,7 +106,13 @@ function spinComplementary() {
 
 function spinAnalogous() {
   const base = randomHex();
-  renderColor("analogousResult", base);
+
+  const c = parseInt(base.slice(1), 16);
+
+  const left = "#" + ((c + 0x202020) & 0xffffff).toString(16).padStart(6, "0");
+  const right = "#" + ((c - 0x202020) & 0xffffff).toString(16).padStart(6, "0");
+
+  renderMultiple("analogousResult", [left, right]);
 }
 
 /* =========================
@@ -144,7 +150,7 @@ function spinTexture() {
 }
 
 /* =========================
-   🎡 THEME WHEEL
+   🎡 THEME WHEEL (UNCHANGED FUNCTIONALLY)
 ========================= */
 
 const themes = [
