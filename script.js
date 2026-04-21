@@ -22,7 +22,7 @@ function rgbToHex({ r, g, b }) {
 }
 
 /* =========================
-   RENDER (CLEAN + STABLE)
+   RENDER (CLEAN WORKING VERSION)
 ========================= */
 
 function renderColor(id, hex) {
@@ -44,7 +44,7 @@ function renderMultiple(id, arr) {
 }
 
 /* =========================
-   BASE COLORS
+   BASE
 ========================= */
 
 function spinBase() {
