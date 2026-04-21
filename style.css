@@ -1,61 +1,5 @@
-body {
-  font-family: 'Poppins', sans-serif;
-  background: #fdf6f0;
-  margin: 0;
-  padding: 0;
-  color: #333;
-}
 
-header {
-  text-align: center;
-  padding: 30px;
-}
-
-main {
-  max-width: 1000px;
-  margin: auto;
-  padding: 20px;
-}
-
-/* Category header style */
-.category > h2 {
-  text-align: center;
-  margin-bottom: 15px;
-}
-
-.wheel-pair {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  margin-bottom: 25px;
-}
-
-.wheel-group {
-  background: rgba(255,255,255,0.85);
-  border-radius: 20px;
-  padding: 20px;
-  width: 45%;
-  text-align: center;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-  margin-bottom: 20px;
-}
-
-button {
-  padding: 10px 20px;
-  border-radius: 30px;
-  border: none;
-  background: #ffafcc;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-  margin: 8px;
-}
-
-button:hover {
-  background: #ffc8dd;
-}
-
-/* Result containers: show colours side by side */
+/* RESULT LAYOUT (clean + consistent) */
 div[id$="Result"] {
   display: flex;
   flex-wrap: wrap;
@@ -64,36 +8,50 @@ div[id$="Result"] {
   margin-top: 10px;
 }
 
-.color-item, .texture-card {
+/* COLOR + TEXTURE ITEMS */
+.color-item,
+.texture-card {
   animation: pop 0.5s ease;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* Colour box with hex below */
+/* COLOR BOX */
 .color-box {
   width: 60px;
   height: 60px;
-  border-radius: 8px;
-  border: 1px solid #aaa;
-  margin-bottom: 4px;
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,0.15);
+  margin-bottom: 5px;
 }
 
+/* TEXTURE CARD */
 .texture-card {
   background: #ffe4e1;
-  padding: 10px;
+  padding: 10px 14px;
   border-radius: 12px;
+  font-weight: 500;
 }
 
-/* Ko-fi top right */
-.kofi-topright {
-  position: fixed;
-  top: 15px;
-  right: 15px;
-  z-index: 1000;
+/* 🎡 THEME CARD (UPDATED FOR CONSISTENCY) */
+.theme-card {
+  padding: 14px 18px;
+  border-radius: 16px;
+
+  background: #f8d7da;
+  color: #4a3b44;
+
+  font-weight: 600;
+  font-size: 15px;
+
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  animation: pop 0.5s ease;
+  text-align: center;
+  max-width: 260px;
 }
 
+/* 🎨 KO-FI BUTTON (SMOOTHER) */
 .kofi-button {
   padding: 10px 18px;
   background: linear-gradient(135deg, #f6c1cc, #d8c9f2);
@@ -102,32 +60,17 @@ div[id$="Result"] {
   border-radius: 999px;
   text-decoration: none;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: all 0.25s ease;
 }
 
 .kofi-button:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(0,0,0,0.2);
-  transition: all 0.2s ease;
 }
 
+/* 🎞 POP ANIMATION */
 @keyframes pop {
   0% { transform: scale(0); opacity: 0; }
   70% { transform: scale(1.1); opacity: 1; }
   100% { transform: scale(1); }
-}
-#wheelResult, #themeResult {
-  display: flex;
-  justify-content: center;
-  margin-top: 15px;
-}
-
-.theme-card {
-  padding: 15px 20px;
-  border-radius: 15px;
-  background: linear-gradient(135deg, #f6c1cc, #d8c9f2);
-  color: white;
-  font-weight: bold;
-  font-size: 16px;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
-  animation: pop 0.5s ease;
 }
