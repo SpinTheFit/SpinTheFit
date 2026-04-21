@@ -1,125 +1,5 @@
-body {
-  font-family: 'Poppins', sans-serif;
-  background: #fdf6f0;
-  margin: 0;
-  padding: 0;
-  color: #333;
-}
-
-header {
-  text-align: center;
-  padding: 30px;
-}
-
-main {
-  max-width: 1000px;
-  margin: auto;
-  padding: 20px;
-}
-
-.category > h2 {
-  text-align: center;
-}
-
-/* LAYOUT */
-.wheel-pair {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  gap: 15px;
-}
-
-.wheel-group {
-  background: rgba(255,255,255,0.85);
-  border-radius: 20px;
-  padding: 20px;
-  width: 45%;
-  text-align: center;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-}
-
-/* BUTTONS */
-button {
-  padding: 10px 20px;
-  border-radius: 30px;
-  border: none;
-  background: #ffafcc;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-  margin: 8px;
-  transition: 0.2s ease;
-}
-
-button:hover {
-  background: #ffc8dd;
-  transform: translateY(-2px);
-}
-
-/* RESULTS */
-div[id$="Result"] {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 12px;
-  min-height: 30px;
-}
-
-/* COLOR CARDS */
-.color-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  animation: pop 0.4s ease;
-}
-
-.color-box {
-  width: 60px;
-  height: 60px;
-  border-radius: 12px;
-  border: 1px solid rgba(0,0,0,0.1);
-  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-}
-
-.texture-card {
-  background: #ffe4e1;
-  padding: 10px 14px;
-  border-radius: 12px;
-  font-weight: 500;
-  animation: pop 0.4s ease;
-}
-
-/* KO-FI */
-.kofi-topright {
-  position: fixed;
-  top: 15px;
-  right: 15px;
-  z-index: 1000;
-}
-
-.kofi-button {
-  padding: 10px 18px;
-  background: linear-gradient(135deg, #f6c1cc, #d8c9f2);
-  color: white;
-  border-radius: 999px;
-  text-decoration: none;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-
-/* THEME CARD */
-.theme-card {
-  margin-top: 12px;
-  padding: 15px;
-  border-radius: 15px;
-  background: #f8d7da;
-  font-weight: bold;
-  display: inline-block;
-  animation: pop 0.4s ease;
-}
-
 /* =========================
-   🎡 FINAL RELIABLE WHEEL SYSTEM
+   🎡 FINAL STABLE WHEEL SYSTEM (FIXED FOR JS CONTROL)
 ========================= */
 
 .wheel-container {
@@ -138,7 +18,7 @@ div[id$="Result"] {
   color: #333;
 }
 
-/* WHEEL (FULL FIX FOR GITHUB + CHROME + SAFARI) */
+/* WHEEL (JS-CONTROLLED ROTATION ONLY — NO CONFLICTS) */
 .wheel {
   width: 220px;
   height: 220px;
@@ -156,16 +36,13 @@ div[id$="Result"] {
     #ffe4c4 315 360deg
   );
 
-  /* critical animation stability */
-  transform: translate3d(0,0,0) rotate(0deg);
-  transform-origin: center;
+  /* IMPORTANT: remove default transform noise */
+  transform: rotate(0deg);
 
-  transition: transform 4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  /* JS fully controls animation timing */
+  transition: none;
 
   will-change: transform;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-
   box-shadow: 0 10px 25px rgba(0,0,0,0.15);
 }
 
