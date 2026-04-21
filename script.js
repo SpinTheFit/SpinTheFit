@@ -1,268 +1,111 @@
-
-// =========================
-// 🎨 STATE
-// =========================
-
 let currentBase = "#ff0000";
+let spinning = false;
+let rotation = 0;
 
-// =========================
-// 🎨 COLOR HELPERS
-// =========================
+const spinSound = new Audio("https://www.soundjay.com/buttons/sounds/button-16.mp3");
 
+/* COLORS */
 function randomHex() {
-  return "#" + Math.floor(Math.random() * 16777215)
-    .toString(16)
-    .padStart(6, "0");
+  return "#" + Math.floor(Math.random() * 16777215).toString(16).padStart(6,"0");
 }
 
 function pastelHex() {
-  const r = Math.floor(Math.random() * 127 + 128);
-  const g = Math.floor(Math.random() * 127 + 128);
-  const b = Math.floor(Math.random() * 127 + 128);
-
-  return rgbToHex({ r, g, b });
+  const r = Math.floor(Math.random()*127+128);
+  const g = Math.floor(Math.random()*127+128);
+  const b = Math.floor(Math.random()*127+128);
+  return rgbToHex({r,g,b});
 }
 
-function shadeColor(hex, percent) {
-  let num = parseInt(hex.slice(1), 16);
-
-  let r = (num >> 16) + percent;
-  let g = ((num >> 8) & 0x00ff) + percent;
-  let b = (num & 0x0000ff) + percent;
-
-  r = Math.min(255, Math.max(0, r));
-  g = Math.min(255, Math.max(0, g));
-  b = Math.min(255, Math.max(0, b));
-
-  return rgbToHex({ r, g, b });
+function shadeColor(hex, p) {
+  let n = parseInt(hex.slice(1),16);
+  let r = (n>>16)+p;
+  let g = ((n>>8)&255)+p;
+  let b = (n&255)+p;
+  return rgbToHex({
+    r:Math.min(255,Math.max(0,r)),
+    g:Math.min(255,Math.max(0,g)),
+    b:Math.min(255,Math.max(0,b))
+  });
 }
 
-// =========================
-// 🧩 DOM HELPERS
-// =========================
-
-function clear(id) {
-  document.getElementById(id).innerHTML = "";
+function rgbToHex({r,g,b}) {
+  return "#" + [r,g,b].map(v=>v.toString(16).padStart(2,"0")).join("");
 }
 
-function addColor(id, color) {
-  const item = document.createElement("div");
-  item.className = "color-item";
-
-  const box = document.createElement("div");
-  box.className = "color-box";
-  box.style.background = color;
-
-  const label = document.createElement("div");
-  label.textContent = color;
-
-  item.append(box, label);
-  document.getElementById(id).appendChild(item);
-}
-
-// =========================
-// 🎡 BASE COLOURS
-// =========================
-
+/* BASE */
 function spinBase() {
-  clear("baseResult");
   currentBase = randomHex();
-  addColor("baseResult", currentBase);
+  document.getElementById("baseResult").innerHTML = currentBase;
 }
 
 function spinPastel() {
-  clear("pastelResult");
   currentBase = pastelHex();
-  addColor("pastelResult", currentBase);
+  document.getElementById("pastelResult").innerHTML = currentBase;
 }
 
-// =========================
-// 🎨 COMPLEMENTARY
-// =========================
-
+/* COMPLEMENTARY */
 function spinComplementary() {
-  clear("complementaryResult");
-
-  const c = parseInt(currentBase.slice(1), 16);
-  const comp = "#" + (0xffffff ^ c).toString(16).padStart(6, "0");
-
-  addColor("complementaryResult", comp);
+  const c = parseInt(currentBase.slice(1),16);
+  const comp = "#" + (0xffffff ^ c).toString(16).padStart(6,"0");
+  document.getElementById("complementaryResult").innerHTML = comp;
 }
 
-// =========================
-// 🎨 ANALOGOUS
-// =========================
-
+/* ANALOGOUS */
 function spinAnalogous() {
-  clear("analogousResult");
-
-  const base = hexToRgb(currentBase);
-
-  const a1 = shiftHue(base, 30);
-  const a2 = shiftHue(base, -30);
-
-  addColor("analogousResult", rgbToHex(a1));
-  addColor("analogousResult", rgbToHex(a2));
+  document.getElementById("analogousResult").innerHTML =
+    currentBase + " + shifted tones";
 }
 
-// =========================
-// ⚫ MONOCHROME
-// =========================
-
+/* MONOCHROME */
 function spinMonochrome() {
-  clear("monoResult");
-
   const base = randomHex();
-
-  addColor("monoResult", shadeColor(base, 60));
-  addColor("monoResult", base);
-  addColor("monoResult", shadeColor(base, -60));
+  document.getElementById("monoResult").innerHTML =
+    shadeColor(base,50)+" "+base+" "+shadeColor(base,-50);
 }
 
-// =========================
-// 🧵 TEXTURES
-// =========================
-
-const textures = [
-  "denim","velvet","leather","satin","silk",
-  "knit","fur","lace","mesh","suede"
-];
-
+/* TEXTURE */
+const textures = ["denim","velvet","leather","silk","lace"];
 function spinTexture() {
-  clear("textureResult");
-
-  const card = document.createElement("div");
-  card.className = "texture-card";
-  card.textContent = textures[Math.floor(Math.random() * textures.length)];
-
-  document.getElementById("textureResult").appendChild(card);
+  document.getElementById("textureResult").innerHTML =
+    textures[Math.floor(Math.random()*textures.length)];
 }
 
-// =========================
-// 🎡 THEME WHEEL
-// =========================
-
+/* 🎡 REAL WHEEL */
 const themes = [
   "Zombie Diner Waitress",
-  "Alien Trying to Blend In",
-  "Runway Model in the Apocalypse",
-  "Haunted Doll Escaped",
-  "Popstar After Breakup",
-  "Time Traveler Stuck in 2007",
-  "Princess Turned Evil",
-  "Villain at a Gala",
-  "Fairy Who Hates Humans",
-  "Angel Fallen From Heaven",
-  "Mermaid on Land",
-  "Celebrity in Disguise",
-  "Spy on a Mission",
-  "Cursed Royalty",
-  "Reality TV Star",
-  "Barbie Gone Wrong",
-  "Y2K Club Kid",
-  "Soft Girl but Evil",
-  "Dark Academia Student",
-  "Office Siren",
-  "Cyberpunk Future",
-  "Ice Queen",
-  "Fire Goddess",
-  "Galaxy Girl"
+  "Alien Blending In",
+  "Runway Apocalypse",
+  "Haunted Doll",
+  "Popstar Breakdown",
+  "Cyberpunk Queen",
+  "Ice Empress",
+  "Galaxy Girl",
+  "Barbie Glitch"
 ];
 
-function spinTheme() {
-  const resultBox = document.getElementById("themeResult");
-  resultBox.innerHTML = "";
+function spinThemeWheel() {
+  if (spinning) return;
+  spinning = true;
 
-  const theme = themes[Math.floor(Math.random() * themes.length)];
+  spinSound.currentTime = 0;
+  spinSound.play();
 
-  const card = document.createElement("div");
-  card.className = "theme-card";
-  card.textContent = theme;
+  const wheel = document.getElementById("themeWheel");
+  const result = document.getElementById("themeResult");
 
-  resultBox.appendChild(card);
-}
+  result.innerHTML = "";
 
-// =========================
-// 🔧 COLOR CONVERSIONS
-// =========================
+  const index = Math.floor(Math.random()*themes.length);
+  const degPerItem = 360/themes.length;
 
-function rgbToHex({ r, g, b }) {
-  return "#" + [r, g, b]
-    .map(v => v.toString(16).padStart(2, "0"))
-    .join("");
-}
+  rotation += 5*360 + index*degPerItem;
+  wheel.style.transform = `rotate(${rotation}deg)`;
 
-function hexToRgb(hex) {
-  const num = parseInt(hex.slice(1), 16);
-  return {
-    r: num >> 16,
-    g: (num >> 8) & 0x00ff,
-    b: num & 0x0000ff
-  };
-}
-
-function shiftHue({ r, g, b }, deg) {
-  let { h, s, l } = rgbToHsl(r, g, b);
-
-  h = (h + deg) % 360;
-  if (h < 0) h += 360;
-
-  return hslToRgb(h, s, l);
-}
-
-function rgbToHsl(r, g, b) {
-  r /= 255; g /= 255; b /= 255;
-
-  const max = Math.max(r, g, b);
-  const min = Math.min(r, g, b);
-
-  let h, s, l = (max + min) / 2;
-
-  if (max === min) {
-    h = s = 0;
-  } else {
-    const d = max - min;
-
-    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-
-    switch (max) {
-      case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-      case g: h = (b - r) / d + 2; break;
-      case b: h = (r - g) / d + 4; break;
-    }
-
-    h *= 60;
-  }
-
-  return { h, s, l };
-}
-
-function hslToRgb(h, s, l) {
-  let r, g, b;
-
-  if (s === 0) {
-    r = g = b = l;
-  } else {
-    const hue2rgb = (p, q, t) => {
-      if (t < 0) t += 1;
-      if (t > 1) t -= 1;
-      if (t < 1 / 6) return p + (q - p) * 6 * t;
-      if (t < 1 / 2) return q;
-      if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
-      return p;
-    };
-
-    const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-    const p = 2 * l - q;
-
-    r = hue2rgb(p, q, h / 360 + 1 / 3);
-    g = hue2rgb(p, q, h / 360);
-    b = hue2rgb(p, q, h / 360 - 1 / 3);
-  }
-
-  return {
-    r: Math.round(r * 255),
-    g: Math.round(g * 255),
-    b: Math.round(b * 255)
-  };
+  setTimeout(() => {
+    const div = document.createElement("div");
+    div.className = "theme-card";
+    div.textContent = themes[index];
+    result.appendChild(div);
+    spinning = false;
+  }, 3000);
 }
