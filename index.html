@@ -8,7 +8,7 @@
 
 <body>
 
-  <!-- Ko-fi Top Right -->
+  <!-- Ko-fi -->
   <div class="kofi-topright">
     <a href="https://ko-fi.com/spinthefit" target="_blank" class="kofi-button">
       💖 Support Spin the Fit
@@ -17,12 +17,12 @@
 
   <header>
     <h1>🎨 Spin the Fit</h1>
-    <p>Spin for colours, palettes, textures, and chaos challenges</p>
+    <p>Spin colours, textures, and chaotic outfit ideas</p>
   </header>
 
   <main>
 
-    <!-- Base Colour Category -->
+    <!-- BASE -->
     <section class="category">
       <h2>Base Colour</h2>
 
@@ -30,68 +30,72 @@
 
         <div class="wheel-group">
           <h3>Full Spectrum</h3>
-          <button onclick="spinBase()">Spin Full Spectrum</button>
+          <button onclick="spinBase()">Spin</button>
           <div id="baseResult"></div>
         </div>
 
         <div class="wheel-group">
           <h3>Pastel</h3>
-          <button onclick="spinPastel()">Spin Pastel</button>
+          <button onclick="spinPastel()">Spin</button>
           <div id="pastelResult"></div>
         </div>
 
       </div>
     </section>
 
-    <!-- Harmony Category -->
+    <!-- HARMONY -->
     <section class="wheel-pair">
 
       <div class="wheel-group">
         <h2>Complementary</h2>
-        <button onclick="spinComplementary()">Spin Complementary</button>
+        <button onclick="spinComplementary()">Spin</button>
         <div id="complementaryResult"></div>
       </div>
 
       <div class="wheel-group">
         <h2>Analogous</h2>
-        <button onclick="spinAnalogous()">Spin Analogous</button>
+        <button onclick="spinAnalogous()">Spin</button>
         <div id="analogousResult"></div>
       </div>
 
     </section>
 
-    <!-- Bottom Category -->
+    <!-- BOTTOM -->
     <section class="wheel-pair">
 
       <div class="wheel-group">
         <h2>Monochrome</h2>
-        <button onclick="spinMonochrome()">Spin Monochrome</button>
+        <button onclick="spinMonochrome()">Spin</button>
         <div id="monoResult"></div>
       </div>
 
       <div class="wheel-group">
         <h2>Textures</h2>
-        <button onclick="spinTexture()">Spin Texture</button>
+        <button onclick="spinTexture()">Spin</button>
         <div id="textureResult"></div>
       </div>
 
     </section>
 
-    <!-- 🎡 Challenge Wheel -->
+    <!-- REAL WHEEL -->
     <section class="category">
-
       <h2>🎡 Challenge Wheel</h2>
 
-      <div class="wheel-group">
-        <button onclick="spinTheme()">Spin Theme</button>
-        <div id="themeResult"></div>
-      </div>
+      <div class="wheel-container">
 
+        <div class="wheel" id="themeWheel">
+          <div class="wheel-center">SPIN</div>
+        </div>
+
+        <button onclick="spinThemeWheel()">SPIN WHEEL</button>
+
+        <div id="themeResult"></div>
+
+      </div>
     </section>
 
   </main>
 
-  <!-- ONLY ONE SCRIPT TAG (IMPORTANT) -->
   <script src="script.js"></script>
 
 </body>
