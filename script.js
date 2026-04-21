@@ -22,7 +22,7 @@ function pastelHex() {
 function shadeColor(hex, p) {
   let n = parseInt(hex.slice(1), 16);
   let r = (n >> 16) + p;
-  let g = ((n >> 8) & 255) + p;
+  let g = (n >> 8 & 255) + p;
   let b = (n & 255) + p;
 
   return rgbToHex({
@@ -37,7 +37,7 @@ function rgbToHex({ r, g, b }) {
 }
 
 /* =========================
-   RENDERERS
+   RENDERERS (UNCHANGED)
 ========================= */
 
 function renderColor(id, hex) {
@@ -81,7 +81,7 @@ function renderMultiple(id, colors) {
 }
 
 /* =========================
-   BASE
+   BASE / HARMONY
 ========================= */
 
 function spinBase() {
@@ -94,20 +94,14 @@ function spinPastel() {
   renderColor("pastelResult", currentBase);
 }
 
-/* =========================
-   HARMONY FIX (IMPORTANT)
-========================= */
-
 function spinComplementary() {
   const c = parseInt(currentBase.slice(1), 16);
   const comp = "#" + (0xffffff ^ c).toString(16).padStart(6, "0");
   renderColor("complementaryResult", comp);
 }
 
-/* ✔ FIXED ANALOGOUS (2 COLOURS GUARANTEED) */
 function spinAnalogous() {
   const base = randomHex();
-
   const c = parseInt(base.slice(1), 16);
 
   const color1 = "#" + ((c + 0x1f1f1f) & 0xffffff).toString(16).padStart(6, "0");
@@ -117,7 +111,7 @@ function spinAnalogous() {
 }
 
 /* =========================
-   MONOCHROME
+   MONOCHROME / TEXTURE
 ========================= */
 
 function spinMonochrome() {
@@ -129,10 +123,6 @@ function spinMonochrome() {
     shadeColor(base, -50)
   ]);
 }
-
-/* =========================
-   TEXTURES
-========================= */
 
 const textures = [
   "denim", "velvet", "leather", "silk", "lace",
@@ -151,7 +141,7 @@ function spinTexture() {
 }
 
 /* =========================
-   🎡 WHEEL FIX (REAL SPIN RELIABILITY)
+   🎡 WHEEL (FIXED RELIABILITY)
 ========================= */
 
 const themes = [
@@ -188,15 +178,12 @@ const themes = [
   "Disco Apocalypse"
 ];
 
-window.addEventListener("load", () => {
-  const wheel = document.getElementById("themeWheel");
-  if (!wheel) return;
-  buildWheel();
-});
+window.addEventListener("load", buildWheel);
 
-/* BUILD WHEEL */
 function buildWheel() {
   const wheel = document.getElementById("themeWheel");
+  if (!wheel) return;
+
   wheel.innerHTML = "";
 
   const angle = 360 / themes.length;
@@ -229,7 +216,10 @@ function buildWheel() {
   });
 }
 
-/* SPIN FIXED */
+/* =========================
+   SPIN (FINAL SAFE VERSION)
+========================= */
+
 function spinThemeWheel() {
   if (spinning) return;
   spinning = true;
@@ -245,13 +235,14 @@ function spinThemeWheel() {
   const index = Math.floor(Math.random() * themes.length);
   const angle = 360 / themes.length;
 
-  rotation += 6 * 360 + index * angle;
+  rotation += 1800 + index * angle;
 
-  wheel.style.transition = "transform 3.8s cubic-bezier(0.2, 0.8, 0.2, 1)";
+  // IMPORTANT: reset transition each time to force animation
+  wheel.style.transition = "transform 4s cubic-bezier(0.2, 0.8, 0.2, 1)";
   wheel.style.transform = `rotate(${rotation}deg)`;
 
   setTimeout(() => {
     result.innerHTML = `<div class="theme-card">${themes[index]}</div>`;
     spinning = false;
-  }, 3800);
+  }, 4000);
 }
