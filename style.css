@@ -1,14 +1,66 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #fdf6f0;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
 
-/* RESULT LAYOUT (clean + consistent) */
+header {
+  text-align: center;
+  padding: 30px;
+}
+
+main {
+  max-width: 1000px;
+  margin: auto;
+  padding: 20px;
+}
+
+.category > h2 {
+  text-align: center;
+}
+
+.wheel-pair {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.wheel-group {
+  background: rgba(255,255,255,0.85);
+  border-radius: 20px;
+  padding: 20px;
+  width: 45%;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+button {
+  padding: 10px 20px;
+  border-radius: 30px;
+  border: none;
+  background: #ffafcc;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 8px;
+}
+
+button:hover {
+  background: #ffc8dd;
+}
+
+/* RESULTS */
 div[id$="Result"] {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
+  flex-wrap: wrap;
   gap: 10px;
   margin-top: 10px;
 }
 
-/* COLOR + TEXTURE ITEMS */
 .color-item,
 .texture-card {
   animation: pop 0.5s ease;
@@ -17,41 +69,25 @@ div[id$="Result"] {
   align-items: center;
 }
 
-/* COLOR BOX */
 .color-box {
   width: 60px;
   height: 60px;
   border-radius: 10px;
-  border: 1px solid rgba(0,0,0,0.15);
-  margin-bottom: 5px;
 }
 
-/* TEXTURE CARD */
 .texture-card {
   background: #ffe4e1;
-  padding: 10px 14px;
+  padding: 10px;
   border-radius: 12px;
-  font-weight: 500;
 }
 
-/* 🎡 THEME CARD (UPDATED FOR CONSISTENCY) */
-.theme-card {
-  padding: 14px 18px;
-  border-radius: 16px;
-
-  background: #f8d7da;
-  color: #4a3b44;
-
-  font-weight: 600;
-  font-size: 15px;
-
-  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
-  animation: pop 0.5s ease;
-  text-align: center;
-  max-width: 260px;
+/* KO-FI */
+.kofi-topright {
+  position: fixed;
+  top: 15px;
+  right: 15px;
 }
 
-/* 🎨 KO-FI BUTTON (SMOOTHER) */
 .kofi-button {
   padding: 10px 18px;
   background: linear-gradient(135deg, #f6c1cc, #d8c9f2);
@@ -59,16 +95,61 @@ div[id$="Result"] {
   font-weight: bold;
   border-radius: 999px;
   text-decoration: none;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  transition: all 0.25s ease;
 }
 
-.kofi-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+/* THEME CARD */
+.theme-card {
+  padding: 15px;
+  border-radius: 15px;
+  background: #f8d7da;
+  color: #4a3b44;
+  font-weight: bold;
+  max-width: 260px;
 }
 
-/* 🎞 POP ANIMATION */
+/* REAL WHEEL */
+.wheel-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.wheel {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: conic-gradient(
+    #f8d7da 0 45deg,
+    #dbeafe 45 90deg,
+    #d1fae5 90 135deg,
+    #fef3c7 135 180deg,
+    #e9d5ff 180 225deg,
+    #ffd6e0 225 270deg,
+    #c7f9ff 270 315deg,
+    #ffe4c4 315 360deg
+  );
+
+  position: relative;
+  transition: transform 3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.wheel-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  background: white;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+/* ANIMATION */
 @keyframes pop {
   0% { transform: scale(0); opacity: 0; }
   70% { transform: scale(1.1); opacity: 1; }
