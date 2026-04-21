@@ -17,18 +17,18 @@ main {
   padding: 20px;
 }
 
-/* Category header */
+/* CATEGORY TITLE */
 .category > h2 {
   text-align: center;
   margin-bottom: 15px;
 }
 
-/* Layout */
+/* LAYOUT */
 .wheel-pair {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
-  margin-bottom: 25px;
+  gap: 15px;
 }
 
 .wheel-group {
@@ -38,10 +38,9 @@ main {
   width: 45%;
   text-align: center;
   box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-  margin-bottom: 20px;
 }
 
-/* Buttons */
+/* BUTTONS */
 button {
   padding: 10px 20px;
   border-radius: 30px;
@@ -58,29 +57,27 @@ button:hover {
 }
 
 /* =========================
-   RESULTS (FIXED HORIZONTAL LAYOUT)
+   FIX: HORIZONTAL COLOUR RESULTS
 ========================= */
 
 div[id$="Result"] {
   display: flex;
+  flex-direction: row;
   justify-content: center;
-  align-items: flex-start;
-  flex-wrap: wrap;
+  align-items: center;
+  flex-wrap: wrap;   /* important so it doesn't overflow */
   gap: 15px;
   margin-top: 12px;
 }
 
-/* COLOR CARD */
+/* each colour card */
 .color-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: fit-content;
-  min-width: 70px;
-  animation: pop 0.3s ease;
 }
 
-/* COLOR BOX */
+/* square preview */
 .color-box {
   width: 60px;
   height: 60px;
@@ -89,16 +86,14 @@ div[id$="Result"] {
   box-shadow: 0 3px 10px rgba(0,0,0,0.08);
 }
 
-/* TEXTURE CARD */
+/* texture card */
 .texture-card {
   background: #ffe4e1;
   padding: 10px 14px;
   border-radius: 12px;
-  font-weight: 500;
-  animation: pop 0.3s ease;
 }
 
-/* KO-FI BUTTON */
+/* KO-FI */
 .kofi-topright {
   position: fixed;
   top: 15px;
@@ -114,17 +109,9 @@ div[id$="Result"] {
   border-radius: 999px;
   text-decoration: none;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  transition: all 0.2s ease;
 }
 
 .kofi-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
-}
-
-/* POP ANIMATION */
-@keyframes pop {
-  0% { transform: scale(0); opacity: 0; }
-  70% { transform: scale(1.1); opacity: 1; }
-  100% { transform: scale(1); }
+  transition: 0.2s ease;
 }
