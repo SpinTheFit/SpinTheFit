@@ -24,14 +24,14 @@ function rgbToHex({r,g,b}) {
 }
 
 /* =========================
-   RENDER
+   CLEAN COLOR RENDER (FIXED SQUARES)
 ========================= */
 
 function renderColor(id, hex) {
   document.getElementById(id).innerHTML = `
     <div class="color-item">
       <div class="color-box" style="background:${hex}"></div>
-      <div>${hex}</div>
+      <div class="hex-label">${hex}</div>
     </div>
   `;
 }
@@ -40,7 +40,7 @@ function renderMultiple(id, arr) {
   document.getElementById(id).innerHTML = arr.map(hex => `
     <div class="color-item">
       <div class="color-box" style="background:${hex}"></div>
-      <div>${hex}</div>
+      <div class="hex-label">${hex}</div>
     </div>
   `).join("");
 }
@@ -106,7 +106,7 @@ function spinTexture(){
 }
 
 /* =========================
-   🎡 WHEEL (FINAL FIXED VERSION)
+   🎡 FIXED WHEEL (VISIBLE + STRUCTURED + SPINNING)
 ========================= */
 
 const themes = [
@@ -144,7 +144,7 @@ function buildWheel() {
     const slice = document.createElement("div");
     slice.className = "slice";
 
-    // 🔥 FIX: correct wheel positioning
+    // correct pie layout
     slice.style.transform = `
       rotate(${i * angle}deg)
       translate(0, -50%)
