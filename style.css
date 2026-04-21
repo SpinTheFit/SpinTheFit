@@ -115,3 +115,19 @@ div[id$="Result"] {
   70% { transform: scale(1.1); opacity: 1; }
   100% { transform: scale(1); }
 }
+#wheelResult, #themeResult {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.theme-card {
+  padding: 15px 20px;
+  border-radius: 15px;
+  background: linear-gradient(135deg, #f6c1cc, #d8c9f2);
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+  animation: pop 0.5s ease;
+}
