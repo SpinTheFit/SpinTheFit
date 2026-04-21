@@ -21,6 +21,7 @@ main {
   text-align: center;
 }
 
+/* layout */
 .wheel-pair {
   display: flex;
   gap: 20px;
@@ -37,6 +38,7 @@ main {
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
+/* buttons */
 button {
   padding: 10px 15px;
   border: none;
@@ -50,6 +52,7 @@ button:hover {
   background: #ffc8dd;
 }
 
+/* color cards */
 .color-item {
   display: flex;
   flex-direction: column;
