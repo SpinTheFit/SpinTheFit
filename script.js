@@ -7,7 +7,9 @@ let rotation = 0;
 ========================= */
 
 function randomHex() {
-  return "#" + Math.floor(Math.random() * 16777215).toString(16).padStart(6, "0");
+  return "#" + Math.floor(Math.random() * 16777215)
+    .toString(16)
+    .padStart(6, "0");
 }
 
 function pastelHex() {
@@ -35,46 +37,46 @@ function rgbToHex({ r, g, b }) {
 }
 
 /* =========================
-   🟦 FIXED COLOUR DISPLAY
+   🟦 IMPORTANT FIX: COLOR DISPLAY
 ========================= */
 
-function renderColor(id, hex) {
-  const container = document.getElementById(id);
-  container.innerHTML = "";
+function showColor(id, hex) {
+  const el = document.getElementById(id);
+  el.innerHTML = "";
 
-  const item = document.createElement("div");
-  item.className = "color-item";
+  const card = document.createElement("div");
+  card.className = "color-item";
 
   const box = document.createElement("div");
   box.className = "color-box";
   box.style.background = hex;
 
-  const label = document.createElement("div");
-  label.textContent = hex;
+  const text = document.createElement("div");
+  text.textContent = hex;
 
-  item.appendChild(box);
-  item.appendChild(label);
-  container.appendChild(item);
+  card.appendChild(box);
+  card.appendChild(text);
+  el.appendChild(card);
 }
 
-function renderMultiple(id, colors) {
-  const container = document.getElementById(id);
-  container.innerHTML = "";
+function showColors(id, arr) {
+  const el = document.getElementById(id);
+  el.innerHTML = "";
 
-  colors.forEach(hex => {
-    const item = document.createElement("div");
-    item.className = "color-item";
+  arr.forEach(hex => {
+    const card = document.createElement("div");
+    card.className = "color-item";
 
     const box = document.createElement("div");
     box.className = "color-box";
     box.style.background = hex;
 
-    const label = document.createElement("div");
-    label.textContent = hex;
+    const text = document.createElement("div");
+    text.textContent = hex;
 
-    item.appendChild(box);
-    item.appendChild(label);
-    container.appendChild(item);
+    card.appendChild(box);
+    card.appendChild(text);
+    el.appendChild(card);
   });
 }
 
@@ -84,12 +86,12 @@ function renderMultiple(id, colors) {
 
 function spinBase() {
   currentBase = randomHex();
-  renderColor("baseResult", currentBase);
+  showColor("baseResult", currentBase);
 }
 
 function spinPastel() {
   currentBase = pastelHex();
-  renderColor("pastelResult", currentBase);
+  showColor("pastelResult", currentBase);
 }
 
 /* =========================
@@ -99,71 +101,91 @@ function spinPastel() {
 function spinComplementary() {
   const c = parseInt(currentBase.slice(1), 16);
   const comp = "#" + (0xffffff ^ c).toString(16).padStart(6, "0");
-  renderColor("complementaryResult", comp);
+  showColor("complementaryResult", comp);
 }
 
 function spinAnalogous() {
   const base = randomHex();
-  renderColor("analogousResult", base);
+  showColor("analogousResult", base);
 }
 
 /* =========================
-   MONOCHROME (FIXED VISUAL)
+   MONOCHROME
 ========================= */
 
 function spinMonochrome() {
   const base = randomHex();
-
-  const lighter = shadeColor(base, 50);
-  const darker = shadeColor(base, -50);
-
-  renderMultiple("monoResult", [lighter, base, darker]);
+  showColors("monoResult", [
+    shadeColor(base, 50),
+    base,
+    shadeColor(base, -50)
+  ]);
 }
 
 /* =========================
    TEXTURES
 ========================= */
 
-const textures = ["denim", "velvet", "leather", "silk", "lace"];
+const textures = [
+  "denim", "velvet", "leather", "silk", "lace",
+  "satin", "fur", "mesh", "suede", "knit"
+];
 
 function spinTexture() {
-  const container = document.getElementById("textureResult");
-  container.innerHTML = "";
+  const el = document.getElementById("textureResult");
+  el.innerHTML = "";
 
   const card = document.createElement("div");
   card.className = "texture-card";
   card.textContent = textures[Math.floor(Math.random() * textures.length)];
 
-  container.appendChild(card);
+  el.appendChild(card);
 }
 
 /* =========================
-   🎡 FULL WORKING WHEEL
+   🎡 FULL WHEEL FIX (ALL THEMES SHOWN)
 ========================= */
 
 const themes = [
-  "Zombie Diner",
-  "Alien Blending In",
-  "Runway Apocalypse",
-  "Haunted Doll",
-  "Popstar Breakdown",
-  "Cyberpunk Queen",
-  "Ice Empress",
+  "Zombie Diner Waitress",
+  "Alien Trying to Blend In",
+  "Runway Model Apocalypse",
+  "Haunted Doll Escaped",
+  "Popstar Breakup Era",
+  "Time Traveler 2007",
+  "Princess Turned Evil",
+  "Villain at Gala",
+  "Fairy Who Hates Humans",
+  "Fallen Angel",
+  "Mermaid on Land",
+  "Spy Mission",
+  "Cursed Royalty",
+  "Reality TV Star",
+  "Influencer Chaos",
+  "Barbie Gone Wrong",
+  "Y2K Club Kid",
+  "Soft Girl Evil",
+  "Dark Academia",
+  "Rich Mom Brunch",
+  "Office Siren",
+  "3AM After Party",
+  "Cyberpunk Future",
+  "Ice Queen",
+  "Fire Goddess",
   "Galaxy Girl",
-  "Barbie Glitch",
-  "Fairy Chaos",
-  "Villain Gala",
-  "Time Traveler",
-  "Angel Fallen",
-  "Mermaid on Land"
+  "Robot Fashion",
+  "Clowncore Glam",
+  "Witch in Paris",
+  "Royal Vampire",
+  "Disco Apocalypse"
 ];
 
-/* build visible wheel */
+/* BUILD WHEEL VISUALLY (FIXED) */
 function buildWheel() {
   const wheel = document.getElementById("themeWheel");
-  const angle = 360 / themes.length;
-
   wheel.innerHTML = "";
+
+  const angle = 360 / themes.length;
 
   themes.forEach((t, i) => {
     const seg = document.createElement("div");
@@ -175,15 +197,18 @@ function buildWheel() {
     seg.style.left = "50%";
     seg.style.transformOrigin = "0 0";
     seg.style.transform = `rotate(${i * angle}deg) skewY(-60deg)`;
+
     seg.style.background = i % 2 ? "#f8d7da" : "#dbeafe";
 
-    const text = document.createElement("span");
+    const text = document.createElement("div");
     text.textContent = themes[i];
+
     text.style.position = "absolute";
     text.style.left = "10px";
     text.style.top = "10px";
-    text.style.fontSize = "10px";
+    text.style.fontSize = "9px";
     text.style.transform = "skewY(60deg) rotate(90deg)";
+    text.style.width = "120px";
 
     seg.appendChild(text);
     wheel.appendChild(seg);
@@ -192,7 +217,7 @@ function buildWheel() {
 
 window.addEventListener("load", buildWheel);
 
-/* spin logic */
+/* SPIN */
 function spinThemeWheel() {
   if (spinning) return;
   spinning = true;
