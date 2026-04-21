@@ -22,7 +22,7 @@ function pastelHex() {
 function shadeColor(hex, p) {
   let n = parseInt(hex.slice(1), 16);
   let r = (n >> 16) + p;
-  let g = (n >> 8 & 255) + p;
+  let g = ((n >> 8) & 255) + p;
   let b = (n & 255) + p;
 
   return rgbToHex({
@@ -37,7 +37,7 @@ function rgbToHex({ r, g, b }) {
 }
 
 /* =========================
-   🎨 UNIVERSAL RENDERER
+   RENDERERS
 ========================= */
 
 function renderColor(id, hex) {
@@ -81,7 +81,7 @@ function renderMultiple(id, colors) {
 }
 
 /* =========================
-   BASE COLOURS
+   BASE
 ========================= */
 
 function spinBase() {
@@ -95,7 +95,7 @@ function spinPastel() {
 }
 
 /* =========================
-   HARMONY FIXED
+   HARMONY FIX (IMPORTANT)
 ========================= */
 
 function spinComplementary() {
@@ -104,15 +104,16 @@ function spinComplementary() {
   renderColor("complementaryResult", comp);
 }
 
+/* ✔ FIXED ANALOGOUS (2 COLOURS GUARANTEED) */
 function spinAnalogous() {
   const base = randomHex();
 
   const c = parseInt(base.slice(1), 16);
 
-  const left = "#" + ((c + 0x202020) & 0xffffff).toString(16).padStart(6, "0");
-  const right = "#" + ((c - 0x202020) & 0xffffff).toString(16).padStart(6, "0");
+  const color1 = "#" + ((c + 0x1f1f1f) & 0xffffff).toString(16).padStart(6, "0");
+  const color2 = "#" + ((c - 0x1f1f1f) & 0xffffff).toString(16).padStart(6, "0");
 
-  renderMultiple("analogousResult", [left, right]);
+  renderMultiple("analogousResult", [color1, color2]);
 }
 
 /* =========================
@@ -150,13 +151,13 @@ function spinTexture() {
 }
 
 /* =========================
-   🎡 THEME WHEEL (UNCHANGED FUNCTIONALLY)
+   🎡 WHEEL FIX (REAL SPIN RELIABILITY)
 ========================= */
 
 const themes = [
   "Zombie Diner Waitress",
   "Alien Trying to Blend In",
-  "Runway Model Apocalypse",
+  "Runway Apocalypse",
   "Haunted Doll Escaped",
   "Popstar Breakup Era",
   "Time Traveler 2007",
@@ -186,6 +187,12 @@ const themes = [
   "Royal Vampire",
   "Disco Apocalypse"
 ];
+
+window.addEventListener("load", () => {
+  const wheel = document.getElementById("themeWheel");
+  if (!wheel) return;
+  buildWheel();
+});
 
 /* BUILD WHEEL */
 function buildWheel() {
@@ -222,9 +229,7 @@ function buildWheel() {
   });
 }
 
-window.addEventListener("load", buildWheel);
-
-/* SPIN */
+/* SPIN FIXED */
 function spinThemeWheel() {
   if (spinning) return;
   spinning = true;
@@ -232,15 +237,21 @@ function spinThemeWheel() {
   const wheel = document.getElementById("themeWheel");
   const result = document.getElementById("themeResult");
 
+  if (!wheel) {
+    spinning = false;
+    return;
+  }
+
   const index = Math.floor(Math.random() * themes.length);
   const angle = 360 / themes.length;
 
-  rotation += 5 * 360 + index * angle;
+  rotation += 6 * 360 + index * angle;
 
+  wheel.style.transition = "transform 3.8s cubic-bezier(0.2, 0.8, 0.2, 1)";
   wheel.style.transform = `rotate(${rotation}deg)`;
 
   setTimeout(() => {
     result.innerHTML = `<div class="theme-card">${themes[index]}</div>`;
     spinning = false;
-  }, 4000);
+  }, 3800);
 }
