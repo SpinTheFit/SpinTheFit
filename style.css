@@ -57,10 +57,12 @@ button:hover {
   background: #ffc8dd;
 }
 
-/* RESULTS CONTAINER (FIXED LAYOUT) */
+/* =========================
+   RESULTS (FIXED HORIZONTAL LAYOUT)
+========================= */
+
 div[id$="Result"] {
   display: flex;
-  flex-direction: row;
   justify-content: center;
   align-items: flex-start;
   flex-wrap: wrap;
@@ -73,6 +75,8 @@ div[id$="Result"] {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: fit-content;
+  min-width: 70px;
   animation: pop 0.3s ease;
 }
 
