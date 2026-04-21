@@ -1,9 +1,6 @@
 let currentBase = "#ff0000";
 
-/* =========================
-   COLORS
-========================= */
-
+/* COLORS */
 function randomHex() {
   return "#" + Math.floor(Math.random() * 16777215)
     .toString(16)
@@ -21,10 +18,7 @@ function rgbToHex({ r, g, b }) {
   return "#" + [r, g, b].map(v => v.toString(16).padStart(2, "0")).join("");
 }
 
-/* =========================
-   RENDER (CLEAN WORKING VERSION)
-========================= */
-
+/* RENDER */
 function renderColor(id, hex) {
   document.getElementById(id).innerHTML = `
     <div class="color-item">
@@ -43,10 +37,7 @@ function renderMultiple(id, arr) {
   `).join("");
 }
 
-/* =========================
-   BASE
-========================= */
-
+/* BASE */
 function spinBase() {
   currentBase = randomHex();
   renderColor("baseResult", currentBase);
@@ -57,10 +48,7 @@ function spinPastel() {
   renderColor("pastelResult", currentBase);
 }
 
-/* =========================
-   HARMONY
-========================= */
-
+/* HARMONY */
 function spinComplementary() {
   const c = parseInt(currentBase.slice(1), 16);
   const comp = "#" + (0xffffff ^ c).toString(16).padStart(6, "0");
@@ -77,10 +65,7 @@ function spinAnalogous() {
   renderMultiple("analogousResult", [c1, c2]);
 }
 
-/* =========================
-   MONOCHROME
-========================= */
-
+/* MONOCHROME */
 function spinMonochrome() {
   const base = randomHex();
 
@@ -104,10 +89,7 @@ function spinMonochrome() {
   ]);
 }
 
-/* =========================
-   TEXTURES
-========================= */
-
+/* TEXTURES */
 const textures = [
   "denim", "velvet", "leather", "silk", "lace",
   "satin", "fur", "mesh", "suede", "knit"
