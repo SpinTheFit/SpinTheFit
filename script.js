@@ -185,48 +185,83 @@ function hslToRgb(h, s, l) {
 }
 
 /* =========================
-   🎴 FASHION CARD DRAW (ANIMATION ADDED)
+   🎴 FASHION CARD DRAW (UPDATED + GLOBAL + DTI STYLE)
 ========================= */
 
 const fashionDeck = [
-  "Zombie Diner Waitress in a Neon City",
-  "Alien Trying to Blend In at a Shopping Mall",
-  "Runway Model in Post-Apocalyptic Paris",
-  "Haunted Doll Escaped from Luxury Store",
-  "Popstar After Breakup Press Tour Outfit",
-  "Time Traveler Stuck in 2007 Internet Era",
-  "Princess Turned Villain at Royal Ball",
-  "Villain Attending a Red Carpet Gala",
-  "Fairy Who Refuses to Believe in Humans",
-  "Angel Who Fell and Chose Streetwear",
-  "Mermaid Walking Through a Rainy City",
-  "Spy on a Mission in High Fashion Disguise",
-  "Cursed Royalty Modern Streetwear Fusion",
-  "Barbie Core but Something Went Wrong",
-  "Y2K Club Kid Neon Explosion Outfit",
-  "Soft Girl Who Is Secretly Dangerous",
-  "Dark Academia Library Dramatic Look",
-  "Old Money Elegant Neutral Fit",
-  "Coquette Soft Pink Ribbon Look",
-  "Baddie Streetwear Oversized Fit",
-  "Model Off Duty Chic Look",
-  "Cottagecore Picnic Dress Outfit",
-  "Fairycore Floral Dream Look",
-  "Soft Goth Lace Black Outfit",
-  "E-Girl Neon Gaming Aesthetic",
-  "Harajuku Tokyo Street Chaos Style",
-  "K-Pop Idol Stage Outfit",
-  "Paris Haute Couture Runway Look",
-  "Cyberpunk Neon Street Samurai Fashion",
-  "Ice Queen Crystal Couture Look",
-  "Fire Goddess Dramatic Flow Outfit"
+  // Core Dress to Impress
+  "Clean Girl",
+  "Old Money",
+  "Coquette",
+  "Baddie Fit",
+  "Model Off Duty",
+  "Soft Girl",
+  "Dark Academia",
+  "Cottagecore",
+  "Fairycore",
+  "Soft Goth",
+  "E-Girl",
+  "Skater Girl",
+  "Y2K Star",
+  "Minimal Chic",
+
+  // Global fashion styles
+  "K-Pop Idol",
+  "Harajuku",
+  "Seoul Street",
+  "Paris Couture",
+  "Italian Chic",
+  "London Indie",
+  "NY Streetwear",
+  "Scandi Minimal",
+  "Dubai Luxe",
+  "Bollywood Glam",
+  "Ankara Fusion",
+  "Middle East Luxe",
+  "Tokyo Street",
+
+  // Aesthetic / trend fits
+  "Pinterest Fit",
+  "Indie Sleaze",
+  "Grunge Revival",
+  "Street Luxe",
+  "Capsule Fit",
+  "Monochrome Fit",
+  "Vintage Chic",
+  "Retro Pop",
+  "Angelcore",
+  "Angel Energy",
+  "Witchcore",
+  "Vamp Aesthetic",
+  "Cyber Glow",
+  "Neon Fit",
+
+  // Chaos / fantasy DTI energy
+  "Zombie Fit",
+  "Neon Alien",
+  "Apocalypse",
+  "Haunted Doll",
+  "Breakup Era",
+  "Time Travel",
+  "Evil Princess",
+  "Red Carpet Villain",
+  "Fallen Angel",
+  "Ice Queen",
+  "Fire Goddess",
+  "Galaxy Girl",
+  "Clowncore",
+  "Witch Mode",
+  "Vamp Royal",
+  "Cyber Samurai",
+  "Runway Chaos",
+  "Popstar Chaos"
 ];
 
 window.drawCard = function () {
   const result = document.getElementById("cardResult");
   if (!result) return;
 
-  // SHUFFLE STATE
+  // shuffle animation
   result.innerHTML = `<div class="theme-card card-shuffle">Shuffling...</div>`;
 
   setTimeout(() => {
