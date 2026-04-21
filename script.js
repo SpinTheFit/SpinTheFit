@@ -1,6 +1,4 @@
 let currentBase = "#ff0000";
-let spinning = false;
-let rotation = 0;
 
 /* COLORS */
 function randomHex() {
@@ -20,7 +18,7 @@ function rgbToHex({r,g,b}) {
   return "#" + [r,g,b].map(v => v.toString(16).padStart(2,"0")).join("");
 }
 
-/* RENDERERS */
+/* RENDER (RESTORED CLEAN VERSION) */
 function renderColor(id, hex) {
   document.getElementById(id).innerHTML = `
     <div class="color-item">
@@ -57,6 +55,7 @@ function spinComplementary(){
   renderColor("complementaryResult", comp);
 }
 
+/* FIXED ANALOGOUS (2 COLORS) */
 function spinAnalogous(){
   const base = randomHex();
   const c = parseInt(base.slice(1),16);
@@ -96,31 +95,4 @@ const textures=["denim","velvet","leather","silk","lace"];
 function spinTexture(){
   document.getElementById("textureResult").innerHTML =
     `<div class="texture-card">${textures[Math.floor(Math.random()*textures.length)]}</div>`;
-}
-
-/* WHEEL */
-const themes=[
-  "Zombie Diner","Alien Blend In","Runway Apocalypse","Haunted Doll",
-  "Popstar Breakdown","Time Traveler","Princess Evil","Villain Gala",
-  "Fairy Chaos","Cyberpunk Queen","Ice Empress","Galaxy Girl"
-];
-
-function spinThemeWheel(){
-  if(spinning) return;
-  spinning = true;
-
-  const wheel = document.getElementById("themeWheel");
-  const result = document.getElementById("themeResult");
-
-  const index = Math.floor(Math.random()*themes.length);
-  const angle = 360/themes.length;
-
-  rotation += 1800 + index*angle;
-
-  wheel.style.transform = `rotate(${rotation}deg)`;
-
-  setTimeout(()=>{
-    result.innerHTML = `<div class="theme-card">${themes[index]}</div>`;
-    spinning = false;
-  },4000);
 }
