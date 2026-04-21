@@ -115,3 +115,83 @@ div[id$="Result"] {
   transform: translateY(-2px);
   transition: 0.2s ease;
 }
+/* =========================
+   🎴 FASHION CARD UPGRADE
+========================= */
+
+#cardResult {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.theme-card {
+  background: linear-gradient(135deg, #fff0f6, #f3f0ff);
+  padding: 20px 25px;
+  border-radius: 18px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+  font-weight: 600;
+  font-size: 16px;
+  max-width: 320px;
+  text-align: center;
+
+  animation: pop 0.35s ease;
+  border: 1px solid rgba(0,0,0,0.05);
+}
+
+/* make it feel like a “draw” */
+.theme-card::before {
+  content: "🎴 DRAWN FIT";
+  display: block;
+  font-size: 11px;
+  opacity: 0.6;
+  margin-bottom: 8px;
+  letter-spacing: 1px;
+}
+/* =========================
+   CARD DRAW ANIMATION
+========================= */
+
+.theme-card {
+  padding: 16px 20px;
+  border-radius: 16px;
+  background: white;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+  font-weight: 600;
+  text-align: center;
+  max-width: 260px;
+  margin: 10px auto;
+}
+
+/* BACK OF CARD */
+.card-draw {
+  animation: shake 0.6s ease infinite alternate;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  font-size: 30px;
+}
+
+/* SHUFFLE FEEL */
+@keyframes shake {
+  0% { transform: rotate(-2deg) translateY(0px); }
+  100% { transform: rotate(2deg) translateY(-3px); }
+}
+
+/* REVEAL ANIMATION */
+.card-flip-in {
+  animation: flipIn 0.6s ease;
+  transform-style: preserve-3d;
+}
+
+@keyframes flipIn {
+  0% {
+    transform: rotateY(90deg) scale(0.9);
+    opacity: 0;
+  }
+  100% {
+    transform: rotateY(0deg) scale(1);
+    opacity: 1;
+  }
+}
