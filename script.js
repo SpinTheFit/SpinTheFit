@@ -1,7 +1,10 @@
 // Store the current base colour
-let currentBase = "#ff0000"; // default initial colour
+let currentBase = "#ff0000";
 
-/* COLOR HELPERS */
+/* =========================
+   COLOR HELPERS
+========================= */
+
 function randomHex() {
   return "#" + Math.floor(Math.random() * 16777215)
     .toString(16).padStart(6, "0");
@@ -27,7 +30,10 @@ function shadeColor(hex, percent) {
   return "#" + (r << 16 | g << 8 | b).toString(16).padStart(6, "0");
 }
 
-/* DOM HELPERS */
+/* =========================
+   DOM HELPERS
+========================= */
+
 function clear(id) {
   document.getElementById(id).innerHTML = "";
 }
@@ -47,7 +53,10 @@ function addColor(id, color) {
   document.getElementById(id).appendChild(item);
 }
 
-/* BASE COLOUR */
+/* =========================
+   BASE COLOUR
+========================= */
+
 function spinBase() {
   clear("baseResult");
   currentBase = randomHex();
@@ -60,7 +69,10 @@ function spinPastel() {
   addColor("pastelResult", currentBase);
 }
 
-/* COMPLEMENTARY & ANALOGOUS */
+/* =========================
+   HARMONY
+========================= */
+
 function spinComplementary() {
   clear("complementaryResult");
   const c = parseInt(currentBase.slice(1), 16);
@@ -77,7 +89,10 @@ function spinAnalogous() {
   addColor("analogousResult", rgbToHex(analog2));
 }
 
-/* MONOCHROME */
+/* =========================
+   MONOCHROME
+========================= */
+
 function spinMonochrome() {
   clear("monoResult");
   const base = randomHex();
@@ -86,121 +101,91 @@ function spinMonochrome() {
   addColor("monoResult", shadeColor(base, -60));
 }
 
-/* TEXTURES */
+/* =========================
+   TEXTURES
+========================= */
+
 const textures = ["denim","velvet","leather","satin","silk","knit","fur","lace","mesh","suede"];
+
 function spinTexture() {
   clear("textureResult");
   const card = document.createElement("div");
   card.className = "texture-card";
-  card.textContent = textures[Math.floor(Math.random()*textures.length)];
+  card.textContent = textures[Math.floor(Math.random() * textures.length)];
   document.getElementById("textureResult").appendChild(card);
 }
 
-/* --- Helper functions for Analogous --- */
+/* =========================
+   COLOR CONVERSION HELPERS
+========================= */
+
 function hexToRgb(hex) {
   const num = parseInt(hex.slice(1), 16);
   return { r: (num >> 16), g: ((num >> 8) & 0x00ff), b: (num & 0x0000ff) };
 }
 
-function shiftHue({r,g,b}, deg) {
-  let {h,s,l} = rgbToHsl(r,g,b);
+function rgbToHex({ r, g, b }) {
+  return "#" + [r, g, b].map(v => v.toString(16).padStart(2, "0")).join("");
+}
+
+function shiftHue({ r, g, b }, deg) {
+  let { h, s, l } = rgbToHsl(r, g, b);
   h = (h + deg) % 360;
-  if(h < 0) h += 360;
-  return hslToRgb(h,s,l);
+  if (h < 0) h += 360;
+  return hslToRgb(h, s, l);
 }
 
-function rgbToHex({r,g,b}) {
-  return "#" + [r,g,b].map(v=>v.toString(16).padStart(2,"0")).join("");
-}
+function rgbToHsl(r, g, b) {
+  r /= 255; g /= 255; b /= 255;
+  const max = Math.max(r, g, b), min = Math.min(r, g, b);
+  let h, s, l = (max + min) / 2;
 
-/* RGB / HSL conversions */
-function rgbToHsl(r,g,b){
-  r/=255; g/=255; b/=255;
-  const max=Math.max(r,g,b), min=Math.min(r,g,b);
-  let h,s,l=(max+min)/2;
-
-  if(max===min) h=s=0;
-  else{
-    const d=max-min;
-    s=l>0.5 ? d/(2-max-min) : d/(max+min);
-    switch(max){
-      case r: h=(g-b)/d + (g<b?6:0); break;
-      case g: h=(b-r)/d + 2; break;
-      case b: h=(r-g)/d +4; break;
+  if (max === min) h = s = 0;
+  else {
+    const d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    switch (max) {
+      case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+      case g: h = (b - r) / d + 2; break;
+      case b: h = (r - g) / d + 4; break;
     }
-    h*=60;
+    h *= 60;
   }
-  return {h,s,l};
+  return { h, s, l };
 }
 
-function hslToRgb(h,s,l){
-  let r,g,b;
-  if(s===0){
-    r=g=b=l;
+function hslToRgb(h, s, l) {
+  let r, g, b;
+
+  if (s === 0) {
+    r = g = b = l;
   } else {
-    const hue2rgb=(p,q,t)=>{
-      if(t<0) t+=1;
-      if(t>1) t-=1;
-      if(t<1/6) return p+(q-p)*6*t;
-      if(t<1/2) return q;
-      if(t<2/3) return p+(q-p)*(2/3-t)*6;
+    const hue2rgb = (p, q, t) => {
+      if (t < 0) t += 1;
+      if (t > 1) t -= 1;
+      if (t < 1/6) return p + (q - p) * 6 * t;
+      if (t < 1/2) return q;
+      if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
       return p;
     };
-    const q = l<0.5 ? l*(1+s) : l+s-l*s;
-    const p = 2*l - q;
-    r=hue2rgb(p,q,h/360 + 1/3);
-    g=hue2rgb(p,q,h/360);
-    b=hue2rgb(p,q,h/360 - 1/3);
+
+    const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+    const p = 2 * l - q;
+
+    r = hue2rgb(p, q, h / 360 + 1/3);
+    g = hue2rgb(p, q, h / 360);
+    b = hue2rgb(p, q, h / 360 - 1/3);
   }
-  return {r:Math.round(r*255), g:Math.round(g*255), b:Math.round(b*255)};
+
+  return {
+    r: Math.round(r * 255),
+    g: Math.round(g * 255),
+    b: Math.round(b * 255)
+  };
 }
-/* THEME WHEEL */
 
-const themes = [
-  "Zombie Diner Waitress",
-  "Alien Trying to Blend In",
-  "Runway Model in the Apocalypse",
-  "Haunted Doll Escaped",
-  "Popstar After Breakup",
-  "Time Traveler Stuck in 2007",
-  "Princess Turned Evil",
-  "Villain at a Gala",
-  "Fairy Who Hates Humans",
-  "Angel Fallen From Heaven",
-  "Mermaid on Land",
-  "Celebrity in Disguise",
-  "Spy on a Mission",
-  "Cursed Royalty",
-  "Reality TV Star",
-  "Influencer Scandal Era",
-  "Barbie Gone Wrong",
-  "Y2K Club Kid",
-  "Soft Girl but Evil",
-  "Dark Academia Student",
-  "Rich Mom at Brunch",
-  "Office Siren",
-  "After Party at 3AM",
-  "Cyberpunk Future",
-  "Ice Queen",
-  "Fire Goddess",
-  "Galaxy Girl",
-  "Robot Learning Fashion"
-];
-
-function spinTheme() {
-  const resultBox = document.getElementById("themeResult");
-  resultBox.innerHTML = "";
-
-  const randomTheme = themes[Math.floor(Math.random() * themes.length)];
-
-  const card = document.createElement("div");
-  card.className = "theme-card";
-  card.textContent = randomTheme;
-
-  resultBox.appendChild(card);
-}
 /* =========================
-   🎴 FASHION CARD DRAW SYSTEM
+   🎴 FASHION CARD DRAW SYSTEM (FIXED)
 ========================= */
 
 const fashionDeck = [
@@ -218,96 +203,30 @@ const fashionDeck = [
   "Spy on a Mission in High Fashion Disguise",
   "Cursed Royalty Modern Streetwear Fusion",
   "Reality TV Star Chaos Outfit Moment",
-  "Influencer Cancelled Mid Fashion Week",
   "Barbie Core but Something Went Wrong",
   "Y2K Club Kid Neon Explosion Outfit",
   "Soft Girl Who Is Secretly Dangerous",
-  "Dark Academia Library But Make It Dramatic",
-  "Rich Mom Brunch Outfit With Hidden Chaos",
-  "Office Siren Corporate Power Look",
-  "After Party at 3AM Exhausted Glam",
-  "Cyberpunk Neon Street Samurai Fashion",
-  "Ice Queen Crystal Couture Look",
-  "Fire Goddess Dramatic Flow Outfit",
-  "Galaxy Girl Cosmic Glow Streetwear",
-  "Robot Learning Human Fashion Phase 1",
-  "Clowncore High Fashion Editorial Look",
-  "Witch Living in Modern Paris Apartment",
-  "Royal Vampire Contemporary Luxury Fit",
-
-  /* BASIC DRESS TO IMPRESS STYLE */
-  "Clean Girl Minimal White Outfit",
-  "Old Money Neutral Elegant Fit",
-  "Coquette Soft Pink Ribbon Outfit",
+  "Dark Academia Library Dramatic Look",
+  "Old Money Elegant Neutral Fit",
+  "Coquette Soft Pink Ribbon Look",
   "Baddie Streetwear Oversized Fit",
-  "Model Off Duty Casual Chic Look",
-  "Pinterest Aesthetic Soft Girl Fit",
-  "Minimalist Black and Beige Capsule Outfit",
-  "Y2K Pop Star Glitter Outfit",
-  "Grunge Revival Flannel Chaos Look",
-  "Dark Academia Wool Coat Fit",
+  "Model Off Duty Chic Look",
   "Cottagecore Picnic Dress Outfit",
   "Fairycore Floral Dream Look",
-  "Angelcore White Ethereal Outfit",
-  "Soft Goth Lace and Black Outfit",
-  "E-Girl Neon Gaming Aesthetic Fit",
-  "Skater Girl Baggy Casual Outfit",
-
-  /* GLOBAL FASHION INSPIRATION */
-  "Harajuku Tokyo Street Explosion Style",
-  "K-Pop Idol Stage Performance Outfit",
-  "Seoul Street Fashion Editorial Look",
-  "Paris Haute Couture Runway Moment",
-  "Italian Luxury Street Style Fit",
-  "London Indie Sleaze Night Outfit",
-  "New York Streetwear Power Look",
-  "Dubai Luxury Gold Glam Outfit",
-  "Mumbai Bollywood Red Carpet Look",
-  "African Ankara Modern Street Fusion",
-  "Middle Eastern Royal Inspired Elegance",
-  "Scandinavian Minimal Clean Fashion"
+  "Soft Goth Lace Black Outfit",
+  "E-Girl Neon Gaming Aesthetic",
+  "Harajuku Tokyo Street Chaos Style",
+  "K-Pop Idol Stage Outfit",
+  "Paris Haute Couture Runway Look",
+  "Cyberpunk Neon Street Samurai Fashion",
+  "Ice Queen Crystal Couture Look",
+  "Fire Goddess Dramatic Flow Outfit"
 ];
 
 window.drawCard = function () {
   const result = document.getElementById("cardResult");
 
-  if (!result) {
-    console.log("cardResult element not found");
-    return;
-  }
-
-  const fashionDeck = [
-    "Zombie Diner Waitress in a Neon City",
-    "Alien Trying to Blend In at a Shopping Mall",
-    "Runway Model in Post-Apocalyptic Paris",
-    "Haunted Doll Escaped from Luxury Store",
-    "Popstar After Breakup Press Tour Outfit",
-    "Time Traveler Stuck in 2007 Internet Era",
-    "Princess Turned Villain at Royal Ball",
-    "Villain Attending a Red Carpet Gala",
-    "Fairy Who Refuses to Believe in Humans",
-    "Angel Who Fell and Chose Streetwear",
-    "Mermaid Walking Through a Rainy City",
-    "Spy on a Mission in High Fashion Disguise",
-    "Cursed Royalty Modern Streetwear Fusion",
-    "Reality TV Star Chaos Outfit Moment",
-    "Influencer Cancelled Mid Fashion Week",
-    "Barbie Core but Something Went Wrong",
-    "Y2K Club Kid Neon Explosion Outfit",
-    "Soft Girl Who Is Secretly Dangerous",
-    "Dark Academia Library But Make It Dramatic",
-    "Old Money Elegant Neutral Fit",
-    "Coquette Soft Pink Ribbon Look",
-    "Baddie Streetwear Oversized Fit",
-    "Model Off Duty Casual Chic Look",
-    "Cottagecore Picnic Dress Outfit",
-    "Fairycore Floral Dream Look",
-    "Soft Goth Lace Black Outfit",
-    "E-Girl Neon Gaming Aesthetic",
-    "Harajuku Tokyo Street Chaos Style",
-    "K-Pop Idol Stage Outfit",
-    "Paris Haute Couture Runway Look"
-  ];
+  if (!result) return;
 
   const pick = fashionDeck[Math.floor(Math.random() * fashionDeck.length)];
 
