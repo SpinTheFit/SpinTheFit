@@ -1,3 +1,4 @@
+
 body {
   font-family: 'Poppins', sans-serif;
   background: #fdf6f0;
@@ -17,16 +18,21 @@ main {
   padding: 20px;
 }
 
+/* CATEGORY TITLE */
 .category > h2 {
   text-align: center;
+  margin-bottom: 15px;
 }
 
+/* LAYOUT */
 .wheel-pair {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
+  gap: 15px;
 }
 
+/* BOXES */
 .wheel-group {
   background: rgba(255,255,255,0.85);
   border-radius: 20px;
@@ -34,9 +40,9 @@ main {
   width: 45%;
   text-align: center;
   box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-  margin-bottom: 20px;
 }
 
+/* BUTTONS */
 button {
   padding: 10px 20px;
   border-radius: 30px;
@@ -46,24 +52,28 @@ button {
   font-weight: bold;
   cursor: pointer;
   margin: 8px;
+  transition: all 0.2s ease;
 }
 
 button:hover {
   background: #ffc8dd;
+  transform: translateY(-2px);
 }
 
-/* RESULTS */
+/* RESULT AREAS */
 div[id$="Result"] {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   gap: 10px;
-  margin-top: 10px;
+  margin-top: 12px;
+  min-height: 30px;
 }
 
+/* COLOR ITEMS */
 .color-item,
 .texture-card {
-  animation: pop 0.5s ease;
+  animation: pop 0.4s ease;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -72,20 +82,24 @@ div[id$="Result"] {
 .color-box {
   width: 60px;
   height: 60px;
-  border-radius: 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,0.1);
 }
 
+/* TEXTURE CARD */
 .texture-card {
   background: #ffe4e1;
-  padding: 10px;
+  padding: 10px 14px;
   border-radius: 12px;
+  font-weight: 500;
 }
 
-/* KO-FI */
+/* KO-FI BUTTON */
 .kofi-topright {
   position: fixed;
   top: 15px;
   right: 15px;
+  z-index: 1000;
 }
 
 .kofi-button {
@@ -95,19 +109,27 @@ div[id$="Result"] {
   font-weight: bold;
   border-radius: 999px;
   text-decoration: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: all 0.2s ease;
+}
+
+.kofi-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
 }
 
 /* THEME CARD */
 .theme-card {
-  padding: 15px;
-  border-radius: 15px;
+  padding: 15px 18px;
+  border-radius: 16px;
   background: #f8d7da;
   color: #4a3b44;
   font-weight: bold;
   max-width: 260px;
+  animation: pop 0.4s ease;
 }
 
-/* REAL WHEEL */
+/* 🎡 WHEEL CONTAINER */
 .wheel-container {
   display: flex;
   flex-direction: column;
@@ -115,25 +137,33 @@ div[id$="Result"] {
   gap: 15px;
 }
 
+/* 🎡 REAL WHEEL */
 .wheel {
   width: 220px;
   height: 220px;
   border-radius: 50%;
+
   background: conic-gradient(
-    #f8d7da 0 45deg,
-    #dbeafe 45 90deg,
-    #d1fae5 90 135deg,
-    #fef3c7 135 180deg,
-    #e9d5ff 180 225deg,
-    #ffd6e0 225 270deg,
-    #c7f9ff 270 315deg,
-    #ffe4c4 315 360deg
+    #f8d7da 0deg 45deg,
+    #dbeafe 45deg 90deg,
+    #d1fae5 90deg 135deg,
+    #fef3c7 135deg 180deg,
+    #e9d5ff 180deg 225deg,
+    #ffd6e0 225deg 270deg,
+    #c7f9ff 270deg 315deg,
+    #ffe4c4 315deg 360deg
   );
 
   position: relative;
+
+  /* IMPORTANT FIX: ensures smooth spin always works */
+  transform-origin: center;
   transition: transform 3s cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
 }
 
+/* CENTER */
 .wheel-center {
   position: absolute;
   top: 50%;
@@ -147,6 +177,7 @@ div[id$="Result"] {
   align-items: center;
   justify-content: center;
   font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
 /* ANIMATION */
