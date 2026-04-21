@@ -1,172 +1,101 @@
-let currentBase = "#ff0000";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Spin the Fit</title>
+  <link rel="stylesheet" href="style.css">
+</head>
 
-/* =========================
-   COLORS
-========================= */
+<body>
 
-function randomHex() {
-  return "#" + Math.floor(Math.random() * 16777215)
-    .toString(16)
-    .padStart(6, "0");
-}
+  <div class="kofi-topright">
+    <a href="https://ko-fi.com/spinthefit" target="_blank" class="kofi-button">
+      💖 Support Spin the Fit
+    </a>
+  </div>
 
-function pastelHex() {
-  const r = Math.floor(Math.random() * 127 + 128);
-  const g = Math.floor(Math.random() * 127 + 128);
-  const b = Math.floor(Math.random() * 127 + 128);
-  return rgbToHex({ r, g, b });
-}
+  <header>
+    <h1>🎨 Spin the Fit</h1>
+    <p>Spin colours, textures, and chaotic outfit ideas</p>
+  </header>
 
-function rgbToHex({ r, g, b }) {
-  return "#" + [r, g, b].map(v => v.toString(16).padStart(2, "0")).join("");
-}
+  <main>
 
-/* =========================
-   RENDER
-========================= */
+    <!-- BASE -->
+    <section class="category">
+      <h2>Base Colour</h2>
 
-function renderColor(id, hex) {
-  document.getElementById(id).innerHTML = `
-    <div class="color-item">
-      <div class="color-box" style="background:${hex}"></div>
-      <div>${hex}</div>
-    </div>
-  `;
-}
+      <div class="wheel-pair">
+        <div class="wheel-group">
+          <h3>Full Spectrum</h3>
+          <button onclick="spinBase()">Spin</button>
+          <div id="baseResult"></div>
+        </div>
 
-function renderMultiple(id, arr) {
-  document.getElementById(id).innerHTML = arr.map(hex => `
-    <div class="color-item">
-      <div class="color-box" style="background:${hex}"></div>
-      <div>${hex}</div>
-    </div>
-  `).join("");
-}
+        <div class="wheel-group">
+          <h3>Pastel</h3>
+          <button onclick="spinPastel()">Spin</button>
+          <div id="pastelResult"></div>
+        </div>
+      </div>
+    </section>
 
-/* =========================
-   BASE + HARMONY
-========================= */
+    <!-- HARMONY -->
+    <section class="category">
+      <h2>Colour Harmony</h2>
 
-function spinBase() {
-  currentBase = randomHex();
-  renderColor("baseResult", currentBase);
-}
+      <div class="wheel-pair">
+        <div class="wheel-group">
+          <h3>Complementary</h3>
+          <button onclick="spinComplementary()">Spin</button>
+          <div id="complementaryResult"></div>
+        </div>
 
-function spinPastel() {
-  currentBase = pastelHex();
-  renderColor("pastelResult", currentBase);
-}
+        <div class="wheel-group">
+          <h3>Analogous</h3>
+          <button onclick="spinAnalogous()">Spin</button>
+          <div id="analogousResult"></div>
+        </div>
+      </div>
+    </section>
 
-function spinComplementary() {
-  const c = parseInt(currentBase.slice(1), 16);
-  const comp = "#" + (0xffffff ^ c).toString(16).padStart(6, "0");
-  renderColor("complementaryResult", comp);
-}
+    <!-- STYLE -->
+    <section class="category">
+      <h2>Style System</h2>
 
-function spinAnalogous() {
-  const base = randomHex();
-  const c = parseInt(base.slice(1), 16);
+      <div class="wheel-pair">
+        <div class="wheel-group">
+          <h3>Monochrome</h3>
+          <button onclick="spinMonochrome()">Spin</button>
+          <div id="monoResult"></div>
+        </div>
 
-  const c1 = "#" + ((c + 0x202020) & 0xffffff).toString(16).padStart(6, "0");
-  const c2 = "#" + ((c - 0x202020) & 0xffffff).toString(16).padStart(6, "0");
+        <div class="wheel-group">
+          <h3>Textures</h3>
+          <button onclick="spinTexture()">Spin</button>
+          <div id="textureResult"></div>
+        </div>
+      </div>
+    </section>
 
-  renderMultiple("analogousResult", [c1, c2]);
-}
+    <!-- 🎡 WHEEL (FIXED + CLICKABLE + VISIBLE) -->
+    <section class="category">
+      <h2>Challenge Wheel</h2>
 
-function spinMonochrome() {
-  const base = randomHex();
+      <div class="wheel-container">
 
-  const shade = (hex, p) => {
-    let n = parseInt(hex.slice(1), 16);
-    let r = (n >> 16) + p;
-    let g = ((n >> 8) & 255) + p;
-    let b = (n & 255) + p;
+        <div class="wheel" id="themeWheel" onclick="spinThemeWheel()"></div>
 
-    return rgbToHex({
-      r: Math.min(255, Math.max(0, r)),
-      g: Math.min(255, Math.max(0, g)),
-      b: Math.min(255, Math.max(0, b))
-    });
-  };
+        <button onclick="spinThemeWheel()">SPIN WHEEL</button>
 
-  renderMultiple("monoResult", [
-    shade(base, 50),
-    base,
-    shade(base, -50)
-  ]);
-}
+        <div id="themeResult"></div>
 
-/* =========================
-   TEXTURES
-========================= */
+      </div>
+    </section>
 
-const textures = [
-  "denim", "velvet", "leather", "silk", "lace",
-  "satin", "fur", "mesh", "suede", "knit",
-  "linen", "corduroy", "chiffon", "tweed", "organza"
-];
+  </main>
 
-function spinTexture() {
-  document.getElementById("textureResult").innerHTML =
-    `<div class="texture-card">${textures[Math.floor(Math.random() * textures.length)]}</div>`;
-}
+  <script src="script.js"></script>
 
-/* =========================
-   🎡 FULL GLOBAL FASHION + DRESS TO IMPRESS WHEEL
-========================= */
-
-const themes = [
-  // chaotic fashion fantasy
-  "Zombie Diner Waitress",
-  "Alien Trying to Blend In",
-  "Runway Apocalypse",
-  "Haunted Doll Escaped",
-  "Popstar Breakup Era",
-  "Villain at Gala",
-  "Fallen Angel",
-  "Cursed Royalty",
-  "Reality TV Star Meltdown",
-  "Barbie Glitch Core",
-  "Cyberpunk Neon Diva",
-  "Ice Queen Couture",
-  "Fire Goddess Look",
-  "Galaxy Girl Aesthetic",
-  "Clowncore Glam",
-  "Witch in Paris",
-  "Royal Vampire Ball",
-  "Disco Apocalypse",
-
-  // dress to impress / modern aesthetics
-  "Clean Girl Aesthetic",
-  "Old Money Elegance",
-  "Coquette Soft Pink Look",
-  "Baddie Streetwear Fit",
-  "Model Off Duty Look",
-  "Pinterest Baddie Core",
-  "Minimalist Chic Outfit",
-  "Y2K Pop Star Outfit",
-  "Grunge Revival Fit",
-  "Dark Academia Scholar",
-  "Light Academia Soft Look",
-  "Cottagecore Dream Dress",
-  "Fairycore Garden Outfit",
-  "Angelcore White Fit",
-  "Soft Goth Aesthetic",
-  "E-Girl TikTok Fit",
-  "E-Boy Street Style",
-  "Skater Girl Casual Fit",
-
-  // global fashion inspiration
-  "Harajuku Tokyo Street Style",
-  "K-Pop Idol Stage Outfit",
-  "Seoul Street Fashion Chic",
-  "Paris Haute Couture Look",
-  "Italian Luxury Street Style",
-  "London Indie Sleaze Outfit",
-  "New York Streetwear Fit",
-  "Dubai Luxury Glam Look",
-  "Mumbai Bollywood Glam",
-  "African Ankara Modern Fashion",
-  "Middle Eastern Royal Elegance",
-  "Scandinavian Minimal Style"
-];
+</body>
+</html>
