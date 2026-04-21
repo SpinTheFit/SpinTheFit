@@ -154,3 +154,48 @@ function hslToRgb(h,s,l){
   }
   return {r:Math.round(r*255), g:Math.round(g*255), b:Math.round(b*255)};
 }
+/* THEME WHEEL */
+
+const themes = [
+  "Zombie Diner Waitress",
+  "Alien Trying to Blend In",
+  "Runway Model in the Apocalypse",
+  "Haunted Doll Escaped",
+  "Popstar After Breakup",
+  "Time Traveler Stuck in 2007",
+  "Princess Turned Evil",
+  "Villain at a Gala",
+  "Fairy Who Hates Humans",
+  "Angel Fallen From Heaven",
+  "Mermaid on Land",
+  "Celebrity in Disguise",
+  "Spy on a Mission",
+  "Cursed Royalty",
+  "Reality TV Star",
+  "Influencer Scandal Era",
+  "Barbie Gone Wrong",
+  "Y2K Club Kid",
+  "Soft Girl but Evil",
+  "Dark Academia Student",
+  "Rich Mom at Brunch",
+  "Office Siren",
+  "After Party at 3AM",
+  "Cyberpunk Future",
+  "Ice Queen",
+  "Fire Goddess",
+  "Galaxy Girl",
+  "Robot Learning Fashion"
+];
+
+function spinTheme() {
+  const resultBox = document.getElementById("themeResult");
+  resultBox.innerHTML = "";
+
+  const randomTheme = themes[Math.floor(Math.random() * themes.length)];
+
+  const card = document.createElement("div");
+  card.className = "theme-card";
+  card.textContent = randomTheme;
+
+  resultBox.appendChild(card);
+}
