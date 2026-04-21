@@ -21,6 +21,7 @@ main {
   text-align: center;
 }
 
+/* LAYOUT */
 .wheel-pair {
   display: flex;
   justify-content: space-around;
@@ -37,6 +38,7 @@ main {
   box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 }
 
+/* BUTTONS */
 button {
   padding: 10px 20px;
   border-radius: 30px;
@@ -52,26 +54,46 @@ button:hover {
   background: #ffc8dd;
 }
 
+/* RESULTS GRID */
 div[id$="Result"] {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 10px;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+/* COLOR CARD SYSTEM */
+.color-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
 }
 
 .color-box {
-  width: 60px;
-  height: 60px;
-  border-radius: 10px;
+  width: 65px;
+  height: 65px;
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,0.15);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
+/* TEXT UNDER COLOR */
+.color-item div:last-child {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* TEXTURE */
 .texture-card {
   background: #ffe4e1;
-  padding: 10px;
+  padding: 10px 14px;
   border-radius: 12px;
+  font-weight: 500;
 }
 
+/* KO-FI */
 .kofi-topright {
   position: fixed;
   top: 15px;
@@ -86,14 +108,17 @@ div[id$="Result"] {
   text-decoration: none;
 }
 
+/* THEME CARD */
 .theme-card {
   margin-top: 10px;
   padding: 15px;
   border-radius: 15px;
   background: #f8d7da;
   font-weight: bold;
+  display: inline-block;
 }
 
+/* WHEEL */
 .wheel-container {
   display: flex;
   flex-direction: column;
