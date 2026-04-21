@@ -22,7 +22,7 @@ function pastelHex() {
 function shadeColor(hex, p) {
   let n = parseInt(hex.slice(1), 16);
   let r = (n >> 16) + p;
-  let g = ((n >> 8) & 255) + p;
+  let g = (n >> 8 & 255) + p;
   let b = (n & 255) + p;
 
   return rgbToHex({
@@ -37,10 +37,10 @@ function rgbToHex({ r, g, b }) {
 }
 
 /* =========================
-   🟦 IMPORTANT FIX: COLOR DISPLAY
+   🎨 UNIVERSAL COLOR RENDERER
 ========================= */
 
-function showColor(id, hex) {
+function renderColor(id, hex) {
   const el = document.getElementById(id);
   el.innerHTML = "";
 
@@ -49,33 +49,33 @@ function showColor(id, hex) {
 
   const box = document.createElement("div");
   box.className = "color-box";
-  box.style.background = hex;
+  box.style.backgroundColor = hex;
 
-  const text = document.createElement("div");
-  text.textContent = hex;
+  const label = document.createElement("div");
+  label.textContent = hex;
 
   card.appendChild(box);
-  card.appendChild(text);
+  card.appendChild(label);
   el.appendChild(card);
 }
 
-function showColors(id, arr) {
+function renderMultiple(id, colors) {
   const el = document.getElementById(id);
   el.innerHTML = "";
 
-  arr.forEach(hex => {
+  colors.forEach(hex => {
     const card = document.createElement("div");
     card.className = "color-item";
 
     const box = document.createElement("div");
     box.className = "color-box";
-    box.style.background = hex;
+    box.style.backgroundColor = hex;
 
-    const text = document.createElement("div");
-    text.textContent = hex;
+    const label = document.createElement("div");
+    label.textContent = hex;
 
     card.appendChild(box);
-    card.appendChild(text);
+    card.appendChild(label);
     el.appendChild(card);
   });
 }
@@ -86,12 +86,12 @@ function showColors(id, arr) {
 
 function spinBase() {
   currentBase = randomHex();
-  showColor("baseResult", currentBase);
+  renderColor("baseResult", currentBase);
 }
 
 function spinPastel() {
   currentBase = pastelHex();
-  showColor("pastelResult", currentBase);
+  renderColor("pastelResult", currentBase);
 }
 
 /* =========================
@@ -101,12 +101,12 @@ function spinPastel() {
 function spinComplementary() {
   const c = parseInt(currentBase.slice(1), 16);
   const comp = "#" + (0xffffff ^ c).toString(16).padStart(6, "0");
-  showColor("complementaryResult", comp);
+  renderColor("complementaryResult", comp);
 }
 
 function spinAnalogous() {
   const base = randomHex();
-  showColor("analogousResult", base);
+  renderColor("analogousResult", base);
 }
 
 /* =========================
@@ -115,7 +115,8 @@ function spinAnalogous() {
 
 function spinMonochrome() {
   const base = randomHex();
-  showColors("monoResult", [
+
+  renderMultiple("monoResult", [
     shadeColor(base, 50),
     base,
     shadeColor(base, -50)
@@ -143,7 +144,7 @@ function spinTexture() {
 }
 
 /* =========================
-   🎡 FULL WHEEL FIX (ALL THEMES SHOWN)
+   🎡 THEME WHEEL
 ========================= */
 
 const themes = [
@@ -180,7 +181,7 @@ const themes = [
   "Disco Apocalypse"
 ];
 
-/* BUILD WHEEL VISUALLY (FIXED) */
+/* BUILD WHEEL */
 function buildWheel() {
   const wheel = document.getElementById("themeWheel");
   wheel.innerHTML = "";
