@@ -8,85 +8,88 @@
 
 <body>
 
-  <div class="kofi-topright">
-    <a href="https://ko-fi.com/spinthefit" target="_blank" class="kofi-button">
-      💖 Support Spin the Fit
-    </a>
-  </div>
+<header>
+  <h1>🎨 Spin the Fit</h1>
+  <p>Spin colours, textures, and chaotic outfit ideas</p>
+</header>
 
-  <header>
-    <h1>🎨 Spin the Fit</h1>
-    <p>Spin colours, textures, and chaotic outfit ideas</p>
-  </header>
+<main>
 
-  <main>
+  <!-- BASE -->
+  <section class="category">
+    <h2>Base Colour</h2>
 
-    <!-- BASE -->
-    <section class="category">
-      <h2>Base Colour</h2>
-
-      <div class="wheel-pair">
-
-        <div class="wheel-group">
-          <h3>Full Spectrum</h3>
-          <button onclick="spinBase()">Spin</button>
-          <div id="baseResult"></div>
-        </div>
-
-        <div class="wheel-group">
-          <h3>Pastel</h3>
-          <button onclick="spinPastel()">Spin</button>
-          <div id="pastelResult"></div>
-        </div>
-
+    <div class="wheel-pair">
+      <div class="wheel-group">
+        <h3>Full Spectrum</h3>
+        <button onclick="spinBase()">Spin</button>
+        <div id="baseResult"></div>
       </div>
-    </section>
 
-    <!-- HARMONY -->
-    <section class="category">
-      <h2>Colour Harmony</h2>
-
-      <div class="wheel-pair">
-
-        <div class="wheel-group">
-          <h3>Complementary</h3>
-          <button onclick="spinComplementary()">Spin</button>
-          <div id="complementaryResult"></div>
-        </div>
-
-        <div class="wheel-group">
-          <h3>Analogous</h3>
-          <button onclick="spinAnalogous()">Spin</button>
-          <div id="analogousResult"></div>
-        </div>
-
+      <div class="wheel-group">
+        <h3>Pastel</h3>
+        <button onclick="spinPastel()">Spin</button>
+        <div id="pastelResult"></div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- STYLE -->
-    <section class="category">
-      <h2>Style System</h2>
+  <!-- HARMONY -->
+  <section class="category">
+    <h2>Colour Harmony</h2>
 
-      <div class="wheel-pair">
-
-        <div class="wheel-group">
-          <h3>Monochrome</h3>
-          <button onclick="spinMonochrome()">Spin</button>
-          <div id="monoResult"></div>
-        </div>
-
-        <div class="wheel-group">
-          <h3>Textures</h3>
-          <button onclick="spinTexture()">Spin</button>
-          <div id="textureResult"></div>
-        </div>
-
+    <div class="wheel-pair">
+      <div class="wheel-group">
+        <h3>Complementary</h3>
+        <button onclick="spinComplementary()">Spin</button>
+        <div id="complementaryResult"></div>
       </div>
-    </section>
 
-  </main>
+      <div class="wheel-group">
+        <h3>Analogous</h3>
+        <button onclick="spinAnalogous()">Spin</button>
+        <div id="analogousResult"></div>
+      </div>
+    </div>
+  </section>
 
-  <script src="script.js"></script>
+  <!-- STYLE -->
+  <section class="category">
+    <h2>Style System</h2>
+
+    <div class="wheel-pair">
+      <div class="wheel-group">
+        <h3>Monochrome</h3>
+        <button onclick="spinMonochrome()">Spin</button>
+        <div id="monoResult"></div>
+      </div>
+
+      <div class="wheel-group">
+        <h3>Textures</h3>
+        <button onclick="spinTexture()">Spin</button>
+        <div id="textureResult"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 🎡 CHALLENGE WHEEL (THIS IS THE IMPORTANT FIX) -->
+  <section class="category">
+    <h2>Challenge Wheel</h2>
+
+    <div class="wheel-container">
+
+      <div class="wheel" id="themeWheel"></div>
+
+      <button onclick="spinThemeWheel()">SPIN WHEEL</button>
+
+      <div id="themeResult"></div>
+
+    </div>
+  </section>
+
+</main>
+
+<script src="script.js"></script>
 
 </body>
 </html>
