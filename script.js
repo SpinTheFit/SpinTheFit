@@ -185,7 +185,7 @@ function hslToRgb(h, s, l) {
 }
 
 /* =========================
-   🎴 FASHION CARD DRAW SYSTEM (FIXED)
+   🎴 FASHION CARD DRAW (ANIMATION ADDED)
 ========================= */
 
 const fashionDeck = [
@@ -202,7 +202,6 @@ const fashionDeck = [
   "Mermaid Walking Through a Rainy City",
   "Spy on a Mission in High Fashion Disguise",
   "Cursed Royalty Modern Streetwear Fusion",
-  "Reality TV Star Chaos Outfit Moment",
   "Barbie Core but Something Went Wrong",
   "Y2K Club Kid Neon Explosion Outfit",
   "Soft Girl Who Is Secretly Dangerous",
@@ -225,12 +224,18 @@ const fashionDeck = [
 
 window.drawCard = function () {
   const result = document.getElementById("cardResult");
-
   if (!result) return;
 
-  const pick = fashionDeck[Math.floor(Math.random() * fashionDeck.length)];
+  // SHUFFLE STATE
+  result.innerHTML = `<div class="theme-card card-shuffle">Shuffling...</div>`;
 
-  result.innerHTML = `
-    <div class="theme-card">${pick}</div>
-  `;
+  setTimeout(() => {
+    const pick = fashionDeck[Math.floor(Math.random() * fashionDeck.length)];
+
+    result.innerHTML = `
+      <div class="theme-card card-flip">
+        ${pick}
+      </div>
+    `;
+  }, 900);
 };
