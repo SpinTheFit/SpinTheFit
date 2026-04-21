@@ -22,7 +22,7 @@
 
   <main>
 
-    <!-- BASE -->
+    <!-- BASE COLOURS -->
     <section class="category">
       <h2>Base Colour</h2>
 
@@ -44,40 +44,48 @@
     </section>
 
     <!-- HARMONY -->
-    <section class="wheel-pair">
+    <section class="category">
+      <h2>Colour Harmony</h2>
 
-      <div class="wheel-group">
-        <h2>Complementary</h2>
-        <button onclick="spinComplementary()">Spin</button>
-        <div id="complementaryResult"></div>
+      <div class="wheel-pair">
+
+        <div class="wheel-group">
+          <h3>Complementary</h3>
+          <button onclick="spinComplementary()">Spin</button>
+          <div id="complementaryResult"></div>
+        </div>
+
+        <div class="wheel-group">
+          <h3>Analogous</h3>
+          <button onclick="spinAnalogous()">Spin</button>
+          <div id="analogousResult"></div>
+        </div>
+
       </div>
-
-      <div class="wheel-group">
-        <h2>Analogous</h2>
-        <button onclick="spinAnalogous()">Spin</button>
-        <div id="analogousResult"></div>
-      </div>
-
     </section>
 
-    <!-- BOTTOM -->
-    <section class="wheel-pair">
+    <!-- STYLE -->
+    <section class="category">
+      <h2>Style System</h2>
 
-      <div class="wheel-group">
-        <h2>Monochrome</h2>
-        <button onclick="spinMonochrome()">Spin</button>
-        <div id="monoResult"></div>
+      <div class="wheel-pair">
+
+        <div class="wheel-group">
+          <h3>Monochrome</h3>
+          <button onclick="spinMonochrome()">Spin</button>
+          <div id="monoResult"></div>
+        </div>
+
+        <div class="wheel-group">
+          <h3>Textures</h3>
+          <button onclick="spinTexture()">Spin</button>
+          <div id="textureResult"></div>
+        </div>
+
       </div>
-
-      <div class="wheel-group">
-        <h2>Textures</h2>
-        <button onclick="spinTexture()">Spin</button>
-        <div id="textureResult"></div>
-      </div>
-
     </section>
 
-    <!-- REAL WHEEL -->
+    <!-- 🎡 REAL SPIN WHEEL -->
     <section class="category">
       <h2>🎡 Challenge Wheel</h2>
 
