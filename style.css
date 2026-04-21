@@ -119,7 +119,7 @@ div[id$="Result"] {
 }
 
 /* =========================
-   🎡 FIXED WHEEL SYSTEM
+   🎡 FINAL RELIABLE WHEEL SYSTEM
 ========================= */
 
 .wheel-container {
@@ -138,7 +138,7 @@ div[id$="Result"] {
   color: #333;
 }
 
-/* WHEEL (CRITICAL FIXES HERE) */
+/* WHEEL (FULL FIX FOR GITHUB + CHROME + SAFARI) */
 .wheel {
   width: 220px;
   height: 220px;
@@ -156,17 +156,20 @@ div[id$="Result"] {
     #ffe4c4 315 360deg
   );
 
-  /* IMPORTANT: prevents "no spin" bug */
-  transform: rotate(0deg);
-  transform-origin: center center;
+  /* critical animation stability */
+  transform: translate3d(0,0,0) rotate(0deg);
+  transform-origin: center;
 
   transition: transform 4s cubic-bezier(0.2, 0.8, 0.2, 1);
 
-  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
   will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
 }
 
-/* CENTER DOT */
+/* center dot */
 .wheel::after {
   content: "";
   position: absolute;
@@ -180,7 +183,7 @@ div[id$="Result"] {
   box-shadow: inset 0 2px 6px rgba(0,0,0,0.1);
 }
 
-/* ANIMATION */
+/* animation pop */
 @keyframes pop {
   0% { transform: scale(0); opacity: 0; }
   70% { transform: scale(1.1); opacity: 1; }
