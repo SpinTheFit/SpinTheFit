@@ -56,7 +56,7 @@ button:hover {
   transform: translateY(-2px);
 }
 
-/* RESULTS GRID (IMPORTANT FIX) */
+/* RESULTS */
 div[id$="Result"] {
   display: flex;
   justify-content: center;
@@ -66,7 +66,7 @@ div[id$="Result"] {
   min-height: 30px;
 }
 
-/* COLOR CARD SYSTEM (FIXED VISUAL CONSISTENCY) */
+/* COLOR CARDS */
 .color-item {
   display: flex;
   flex-direction: column;
@@ -118,26 +118,32 @@ div[id$="Result"] {
   animation: pop 0.4s ease;
 }
 
-/* 🎡 WHEEL SYSTEM */
+/* =========================
+   🎡 FIXED WHEEL SYSTEM
+========================= */
+
 .wheel-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 15px;
+  position: relative;
 }
 
-/* pointer makes wheel feel real */
+/* pointer */
 .wheel-container::before {
   content: "▼";
   font-size: 18px;
-  margin-bottom: -10px;
+  margin-bottom: -8px;
+  color: #333;
 }
 
-/* WHEEL */
+/* WHEEL (CRITICAL FIXES HERE) */
 .wheel {
   width: 220px;
   height: 220px;
   border-radius: 50%;
+  position: relative;
 
   background: conic-gradient(
     #f8d7da 0 45deg,
@@ -150,12 +156,17 @@ div[id$="Result"] {
     #ffe4c4 315 360deg
   );
 
-  position: relative;
+  /* IMPORTANT: prevents "no spin" bug */
+  transform: rotate(0deg);
+  transform-origin: center center;
+
   transition: transform 4s cubic-bezier(0.2, 0.8, 0.2, 1);
+
   box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  will-change: transform;
 }
 
-/* CENTER GLOW */
+/* CENTER DOT */
 .wheel::after {
   content: "";
   position: absolute;
