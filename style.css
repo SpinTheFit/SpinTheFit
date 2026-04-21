@@ -54,7 +54,7 @@ button:hover {
   background: #ffc8dd;
 }
 
-/* RESULTS GRID */
+/* RESULT GRID (IMPORTANT RESTORE) */
 div[id$="Result"] {
   display: flex;
   justify-content: center;
@@ -63,34 +63,25 @@ div[id$="Result"] {
   margin-top: 12px;
 }
 
-/* COLOR CARD SYSTEM */
+/* COLOR BOXES BACK */
 .color-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
 }
 
 .color-box {
-  width: 65px;
-  height: 65px;
-  border-radius: 12px;
-  border: 1px solid rgba(0,0,0,0.15);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,0.1);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
 }
 
-/* TEXT UNDER COLOR */
-.color-item div:last-child {
-  font-size: 12px;
-  font-weight: 500;
-}
-
-/* TEXTURE */
 .texture-card {
   background: #ffe4e1;
-  padding: 10px 14px;
+  padding: 10px;
   border-radius: 12px;
-  font-weight: 500;
 }
 
 /* KO-FI */
@@ -106,41 +97,4 @@ div[id$="Result"] {
   color: white;
   border-radius: 999px;
   text-decoration: none;
-}
-
-/* THEME CARD */
-.theme-card {
-  margin-top: 10px;
-  padding: 15px;
-  border-radius: 15px;
-  background: #f8d7da;
-  font-weight: bold;
-  display: inline-block;
-}
-
-/* WHEEL */
-.wheel-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
-}
-
-.wheel {
-  width: 220px;
-  height: 220px;
-  border-radius: 50%;
-  background: conic-gradient(
-    #f8d7da 0 45deg,
-    #dbeafe 45 90deg,
-    #d1fae5 90 135deg,
-    #fef3c7 135 180deg,
-    #e9d5ff 180 225deg,
-    #ffd6e0 225 270deg,
-    #c7f9ff 270 315deg,
-    #ffe4c4 315 360deg
-  );
-  position: relative;
-  transition: transform 4s cubic-bezier(0.2, 0.8, 0.2, 1);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
 }
