@@ -1,101 +1,177 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Spin the Fit</title>
-  <link rel="stylesheet" href="style.css">
-</head>
+let currentBase = "#ff0000";
+let spinning = false;
+let rotation = 0;
 
-<body>
+/* =========================
+   COLORS
+========================= */
 
-  <div class="kofi-topright">
-    <a href="https://ko-fi.com/spinthefit" target="_blank" class="kofi-button">
-      💖 Support Spin the Fit
-    </a>
-  </div>
+function randomHex() {
+  return "#" + Math.floor(Math.random() * 16777215)
+    .toString(16)
+    .padStart(6, "0");
+}
 
-  <header>
-    <h1>🎨 Spin the Fit</h1>
-    <p>Spin colours, textures, and chaotic outfit ideas</p>
-  </header>
+function pastelHex() {
+  const r = Math.floor(Math.random()*127+128);
+  const g = Math.floor(Math.random()*127+128);
+  const b = Math.floor(Math.random()*127+128);
+  return rgbToHex({r,g,b});
+}
 
-  <main>
+function rgbToHex({r,g,b}) {
+  return "#" + [r,g,b].map(v => v.toString(16).padStart(2,"0")).join("");
+}
 
-    <!-- BASE -->
-    <section class="category">
-      <h2>Base Colour</h2>
+/* =========================
+   RENDER
+========================= */
 
-      <div class="wheel-pair">
-        <div class="wheel-group">
-          <h3>Full Spectrum</h3>
-          <button onclick="spinBase()">Spin</button>
-          <div id="baseResult"></div>
-        </div>
+function renderColor(id, hex) {
+  document.getElementById(id).innerHTML = `
+    <div class="color-item">
+      <div class="color-box" style="background:${hex}"></div>
+      <div>${hex}</div>
+    </div>
+  `;
+}
 
-        <div class="wheel-group">
-          <h3>Pastel</h3>
-          <button onclick="spinPastel()">Spin</button>
-          <div id="pastelResult"></div>
-        </div>
-      </div>
-    </section>
+function renderMultiple(id, arr) {
+  document.getElementById(id).innerHTML = arr.map(hex => `
+    <div class="color-item">
+      <div class="color-box" style="background:${hex}"></div>
+      <div>${hex}</div>
+    </div>
+  `).join("");
+}
 
-    <!-- HARMONY -->
-    <section class="category">
-      <h2>Colour Harmony</h2>
+/* =========================
+   COLOR FUNCTIONS
+========================= */
 
-      <div class="wheel-pair">
-        <div class="wheel-group">
-          <h3>Complementary</h3>
-          <button onclick="spinComplementary()">Spin</button>
-          <div id="complementaryResult"></div>
-        </div>
+function spinBase(){
+  currentBase = randomHex();
+  renderColor("baseResult", currentBase);
+}
 
-        <div class="wheel-group">
-          <h3>Analogous</h3>
-          <button onclick="spinAnalogous()">Spin</button>
-          <div id="analogousResult"></div>
-        </div>
-      </div>
-    </section>
+function spinPastel(){
+  currentBase = pastelHex();
+  renderColor("pastelResult", currentBase);
+}
 
-    <!-- STYLE -->
-    <section class="category">
-      <h2>Style System</h2>
+function spinComplementary(){
+  const c = parseInt(currentBase.slice(1),16);
+  const comp = "#" + (0xffffff ^ c).toString(16).padStart(6,"0");
+  renderColor("complementaryResult", comp);
+}
 
-      <div class="wheel-pair">
-        <div class="wheel-group">
-          <h3>Monochrome</h3>
-          <button onclick="spinMonochrome()">Spin</button>
-          <div id="monoResult"></div>
-        </div>
+function spinAnalogous(){
+  const base = randomHex();
+  const c = parseInt(base.slice(1),16);
 
-        <div class="wheel-group">
-          <h3>Textures</h3>
-          <button onclick="spinTexture()">Spin</button>
-          <div id="textureResult"></div>
-        </div>
-      </div>
-    </section>
+  const c1 = "#" + ((c + 0x202020) & 0xffffff).toString(16).padStart(6,"0");
+  const c2 = "#" + ((c - 0x202020) & 0xffffff).toString(16).padStart(6,"0");
 
-    <!-- 🎡 WHEEL (FIXED + CLICKABLE + VISIBLE) -->
-    <section class="category">
-      <h2>Challenge Wheel</h2>
+  renderMultiple("analogousResult", [c1, c2]);
+}
 
-      <div class="wheel-container">
+function spinMonochrome(){
+  const base = randomHex();
 
-        <div class="wheel" id="themeWheel" onclick="spinThemeWheel()"></div>
+  const shade = p => {
+    let n=parseInt(base.slice(1),16);
+    let r=(n>>16)+p;
+    let g=((n>>8)&255)+p;
+    let b=(n&255)+p;
 
-        <button onclick="spinThemeWheel()">SPIN WHEEL</button>
+    return rgbToHex({
+      r:Math.min(255,Math.max(0,r)),
+      g:Math.min(255,Math.max(0,g)),
+      b:Math.min(255,Math.max(0,b))
+    });
+  };
 
-        <div id="themeResult"></div>
+  renderMultiple("monoResult", [
+    shade(50),
+    base,
+    shade(-50)
+  ]);
+}
 
-      </div>
-    </section>
+const textures=["denim","velvet","leather","silk","lace"];
 
-  </main>
+function spinTexture(){
+  document.getElementById("textureResult").innerHTML =
+    `<div class="texture-card">${textures[Math.floor(Math.random()*textures.length)]}</div>`;
+}
 
-  <script src="script.js"></script>
+/* =========================
+   🎡 WHEEL (FINAL FIXED VERSION)
+========================= */
 
-</body>
-</html>
+const themes = [
+  "Zombie Diner Waitress",
+  "Alien Trying to Blend In",
+  "Runway Apocalypse",
+  "Haunted Doll Escaped",
+  "Popstar Breakup Era",
+  "Cyberpunk Diva",
+  "Ice Queen Couture",
+  "Galaxy Girl",
+  "Barbie Glitch",
+  "Dark Academia",
+  "Cottagecore Dream",
+  "Y2K Pop Star",
+  "Grunge Revival",
+  "Soft Goth",
+  "Old Money Elegance",
+  "Clowncore Glam",
+  "Royal Vampire",
+  "Fairycore Angel"
+];
+
+window.addEventListener("load", buildWheel);
+
+function buildWheel() {
+  const wheel = document.getElementById("themeWheel");
+  if (!wheel) return;
+
+  wheel.innerHTML = "";
+
+  const angle = 360 / themes.length;
+
+  themes.forEach((t, i) => {
+    const slice = document.createElement("div");
+    slice.className = "slice";
+
+    // 🔥 FIX: correct wheel positioning
+    slice.style.transform = `
+      rotate(${i * angle}deg)
+      translate(0, -50%)
+    `;
+
+    slice.innerHTML = `<span>${t}</span>`;
+    wheel.appendChild(slice);
+  });
+}
+
+function spinThemeWheel() {
+  if (spinning) return;
+  spinning = true;
+
+  const wheel = document.getElementById("themeWheel");
+  const result = document.getElementById("themeResult");
+
+  const index = Math.floor(Math.random() * themes.length);
+  const angle = 360 / themes.length;
+
+  rotation += 1800 + index * angle;
+
+  wheel.style.transition = "transform 4s cubic-bezier(0.2, 0.8, 0.2, 1)";
+  wheel.style.transform = `rotate(${rotation}deg)`;
+
+  setTimeout(() => {
+    result.innerHTML = `<div class="theme-card">${themes[index]}</div>`;
+    spinning = false;
+  }, 4000);
+}
