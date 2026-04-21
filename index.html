@@ -87,15 +87,17 @@
 
     <!-- 🎡 WHEEL -->
     <section class="category">
-      <h2>🎡 Challenge Wheel</h2>
+      <h2>Challenge Wheel</h2>
 
       <div class="wheel-container">
 
-        <div class="wheel" id="themeWheel"></div>
+        <!-- IMPORTANT: wrapper ensures transform behaves correctly -->
+        <div class="wheel-wrapper">
+          <div class="wheel" id="themeWheel"></div>
+        </div>
 
         <button onclick="spinThemeWheel()">SPIN WHEEL</button>
 
-        <!-- IMPORTANT: result is now styled consistently -->
         <div id="themeResult" class="theme-result"></div>
 
       </div>
