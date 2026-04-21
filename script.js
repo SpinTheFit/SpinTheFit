@@ -261,16 +261,20 @@ window.drawCard = function () {
   const result = document.getElementById("cardResult");
   if (!result) return;
 
-  // shuffle animation
-  result.innerHTML = `<div class="theme-card card-shuffle">Shuffling...</div>`;
+  const pick = fashionDeck[Math.floor(Math.random() * fashionDeck.length)];
+
+  // start "pull" state
+  result.innerHTML = `
+    <div class="theme-card card-draw">
+      <div class="card-back">🂠</div>
+    </div>
+  `;
 
   setTimeout(() => {
-    const pick = fashionDeck[Math.floor(Math.random() * fashionDeck.length)];
-
     result.innerHTML = `
-      <div class="theme-card card-flip">
+      <div class="theme-card card-flip-in">
         ${pick}
       </div>
     `;
-  }, 900);
+  }, 800);
 };
