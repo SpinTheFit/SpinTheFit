@@ -199,3 +199,85 @@ function spinTheme() {
 
   resultBox.appendChild(card);
 }
+/* =========================
+   🎴 FASHION CARD DRAW SYSTEM
+========================= */
+
+const fashionDeck = [
+  "Zombie Diner Waitress in a Neon City",
+  "Alien Trying to Blend In at a Shopping Mall",
+  "Runway Model in Post-Apocalyptic Paris",
+  "Haunted Doll Escaped from Luxury Store",
+  "Popstar After Breakup Press Tour Outfit",
+  "Time Traveler Stuck in 2007 Internet Era",
+  "Princess Turned Villain at Royal Ball",
+  "Villain Attending a Red Carpet Gala",
+  "Fairy Who Refuses to Believe in Humans",
+  "Angel Who Fell and Chose Streetwear",
+  "Mermaid Walking Through a Rainy City",
+  "Spy on a Mission in High Fashion Disguise",
+  "Cursed Royalty Modern Streetwear Fusion",
+  "Reality TV Star Chaos Outfit Moment",
+  "Influencer Cancelled Mid Fashion Week",
+  "Barbie Core but Something Went Wrong",
+  "Y2K Club Kid Neon Explosion Outfit",
+  "Soft Girl Who Is Secretly Dangerous",
+  "Dark Academia Library But Make It Dramatic",
+  "Rich Mom Brunch Outfit With Hidden Chaos",
+  "Office Siren Corporate Power Look",
+  "After Party at 3AM Exhausted Glam",
+  "Cyberpunk Neon Street Samurai Fashion",
+  "Ice Queen Crystal Couture Look",
+  "Fire Goddess Dramatic Flow Outfit",
+  "Galaxy Girl Cosmic Glow Streetwear",
+  "Robot Learning Human Fashion Phase 1",
+  "Clowncore High Fashion Editorial Look",
+  "Witch Living in Modern Paris Apartment",
+  "Royal Vampire Contemporary Luxury Fit",
+
+  /* BASIC DRESS TO IMPRESS STYLE */
+  "Clean Girl Minimal White Outfit",
+  "Old Money Neutral Elegant Fit",
+  "Coquette Soft Pink Ribbon Outfit",
+  "Baddie Streetwear Oversized Fit",
+  "Model Off Duty Casual Chic Look",
+  "Pinterest Aesthetic Soft Girl Fit",
+  "Minimalist Black and Beige Capsule Outfit",
+  "Y2K Pop Star Glitter Outfit",
+  "Grunge Revival Flannel Chaos Look",
+  "Dark Academia Wool Coat Fit",
+  "Cottagecore Picnic Dress Outfit",
+  "Fairycore Floral Dream Look",
+  "Angelcore White Ethereal Outfit",
+  "Soft Goth Lace and Black Outfit",
+  "E-Girl Neon Gaming Aesthetic Fit",
+  "Skater Girl Baggy Casual Outfit",
+
+  /* GLOBAL FASHION INSPIRATION */
+  "Harajuku Tokyo Street Explosion Style",
+  "K-Pop Idol Stage Performance Outfit",
+  "Seoul Street Fashion Editorial Look",
+  "Paris Haute Couture Runway Moment",
+  "Italian Luxury Street Style Fit",
+  "London Indie Sleaze Night Outfit",
+  "New York Streetwear Power Look",
+  "Dubai Luxury Gold Glam Outfit",
+  "Mumbai Bollywood Red Carpet Look",
+  "African Ankara Modern Street Fusion",
+  "Middle Eastern Royal Inspired Elegance",
+  "Scandinavian Minimal Clean Fashion"
+];
+
+/* NEW CARD DRAW FUNCTION */
+function drawCard() {
+  const result = document.getElementById("cardResult");
+  result.innerHTML = "";
+
+  const pick = fashionDeck[Math.floor(Math.random() * fashionDeck.length)];
+
+  const card = document.createElement("div");
+  card.className = "theme-card";
+  card.textContent = pick;
+
+  result.appendChild(card);
+}
