@@ -268,16 +268,50 @@ const fashionDeck = [
   "Scandinavian Minimal Clean Fashion"
 ];
 
-/* NEW CARD DRAW FUNCTION */
-function drawCard() {
+window.drawCard = function () {
   const result = document.getElementById("cardResult");
-  result.innerHTML = "";
+
+  if (!result) {
+    console.log("cardResult element not found");
+    return;
+  }
+
+  const fashionDeck = [
+    "Zombie Diner Waitress in a Neon City",
+    "Alien Trying to Blend In at a Shopping Mall",
+    "Runway Model in Post-Apocalyptic Paris",
+    "Haunted Doll Escaped from Luxury Store",
+    "Popstar After Breakup Press Tour Outfit",
+    "Time Traveler Stuck in 2007 Internet Era",
+    "Princess Turned Villain at Royal Ball",
+    "Villain Attending a Red Carpet Gala",
+    "Fairy Who Refuses to Believe in Humans",
+    "Angel Who Fell and Chose Streetwear",
+    "Mermaid Walking Through a Rainy City",
+    "Spy on a Mission in High Fashion Disguise",
+    "Cursed Royalty Modern Streetwear Fusion",
+    "Reality TV Star Chaos Outfit Moment",
+    "Influencer Cancelled Mid Fashion Week",
+    "Barbie Core but Something Went Wrong",
+    "Y2K Club Kid Neon Explosion Outfit",
+    "Soft Girl Who Is Secretly Dangerous",
+    "Dark Academia Library But Make It Dramatic",
+    "Old Money Elegant Neutral Fit",
+    "Coquette Soft Pink Ribbon Look",
+    "Baddie Streetwear Oversized Fit",
+    "Model Off Duty Casual Chic Look",
+    "Cottagecore Picnic Dress Outfit",
+    "Fairycore Floral Dream Look",
+    "Soft Goth Lace Black Outfit",
+    "E-Girl Neon Gaming Aesthetic",
+    "Harajuku Tokyo Street Chaos Style",
+    "K-Pop Idol Stage Outfit",
+    "Paris Haute Couture Runway Look"
+  ];
 
   const pick = fashionDeck[Math.floor(Math.random() * fashionDeck.length)];
 
-  const card = document.createElement("div");
-  card.className = "theme-card";
-  card.textContent = pick;
-
-  result.appendChild(card);
-}
+  result.innerHTML = `
+    <div class="theme-card">${pick}</div>
+  `;
+};
