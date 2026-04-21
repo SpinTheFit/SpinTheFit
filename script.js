@@ -37,11 +37,13 @@ function rgbToHex({ r, g, b }) {
 }
 
 /* =========================
-   RENDERERS (UNCHANGED)
+   RENDERERS
 ========================= */
 
 function renderColor(id, hex) {
   const el = document.getElementById(id);
+  if (!el) return;
+
   el.innerHTML = "";
 
   const card = document.createElement("div");
@@ -61,6 +63,8 @@ function renderColor(id, hex) {
 
 function renderMultiple(id, colors) {
   const el = document.getElementById(id);
+  if (!el) return;
+
   el.innerHTML = "";
 
   colors.forEach(hex => {
@@ -100,14 +104,14 @@ function spinComplementary() {
   renderColor("complementaryResult", comp);
 }
 
+/* FIXED ANALOGOUS (2 REAL VARIATIONS) */
 function spinAnalogous() {
-  const base = randomHex();
-  const c = parseInt(base.slice(1), 16);
+  const base = parseInt(randomHex().slice(1), 16);
 
-  const color1 = "#" + ((c + 0x1f1f1f) & 0xffffff).toString(16).padStart(6, "0");
-  const color2 = "#" + ((c - 0x1f1f1f) & 0xffffff).toString(16).padStart(6, "0");
+  const c1 = "#" + ((base + 0x202020) & 0xffffff).toString(16).padStart(6, "0");
+  const c2 = "#" + ((base - 0x202020) & 0xffffff).toString(16).padStart(6, "0");
 
-  renderMultiple("analogousResult", [color1, color2]);
+  renderMultiple("analogousResult", [c1, c2]);
 }
 
 /* =========================
@@ -131,6 +135,8 @@ const textures = [
 
 function spinTexture() {
   const el = document.getElementById("textureResult");
+  if (!el) return;
+
   el.innerHTML = "";
 
   const card = document.createElement("div");
@@ -141,7 +147,7 @@ function spinTexture() {
 }
 
 /* =========================
-   🎡 WHEEL (FIXED RELIABILITY)
+   🎡 WHEEL (FULL FIX)
 ========================= */
 
 const themes = [
@@ -178,8 +184,7 @@ const themes = [
   "Disco Apocalypse"
 ];
 
-window.addEventListener("load", buildWheel);
-
+/* BUILD WHEEL */
 function buildWheel() {
   const wheel = document.getElementById("themeWheel");
   if (!wheel) return;
@@ -216,8 +221,16 @@ function buildWheel() {
   });
 }
 
+window.addEventListener("DOMContentLoaded", () => {
+  buildWheel();
+
+  // IMPORTANT fallback binding (fixes "button does nothing" cases)
+  const btn = document.getElementById("spinWheelBtn");
+  if (btn) btn.addEventListener("click", spinThemeWheel);
+});
+
 /* =========================
-   SPIN (FINAL SAFE VERSION)
+   SPIN FIXED (REAL ANIMATION RESET)
 ========================= */
 
 function spinThemeWheel() {
@@ -235,9 +248,12 @@ function spinThemeWheel() {
   const index = Math.floor(Math.random() * themes.length);
   const angle = 360 / themes.length;
 
-  rotation += 1800 + index * angle;
+  rotation += 2160 + index * angle;
 
-  // IMPORTANT: reset transition each time to force animation
+  // FORCE RESET ANIMATION (THIS FIXES “NOT SPINNING” BUG)
+  wheel.style.transition = "none";
+  wheel.offsetHeight; // force reflow
+
   wheel.style.transition = "transform 4s cubic-bezier(0.2, 0.8, 0.2, 1)";
   wheel.style.transform = `rotate(${rotation}deg)`;
 
